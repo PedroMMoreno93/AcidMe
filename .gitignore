@@ -1,1 +1,16 @@
 .DS_Store
+
+# Xcode / SPM
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# SwiftPM (local)
+.swiftpm/xcode/package.xcworkspace/xcuserdata/

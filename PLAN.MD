@@ -4,7 +4,7 @@ Repositorio: GitHub.
 
 Ramas: main <- develop <- feat/HUN-X_descripcion.
 
-Protocolo: Las ramas nacen de develop. Se requiere Unit Test y Snapshot Test (si aplica) para abrir PR.
+Protocolo: Las ramas nacen de develop. Se requiere **Swift Testing** y Snapshot Test (si aplica) para abrir PR.
 
 Gestión: GitHub Project con etiquetas Enhancement.
 
@@ -16,6 +16,17 @@ Tarea 0.2 [Setup]: Proyecto Xcode (iOS 16, iPad, Landscape). Hito: Debe compilar
 Tarea 0.3 [Setup]: Instalación de SPM (TCA y AudioKit).
 
 Tarea 0.4 [Setup]: Estructura modular de carpetas.
+
+HU 0: Creación y configuración del proyecto Xcode
+Descripción: Proyecto Xcode (iPad, iOS 16+, Landscape) que compile; SPM con TCA y AudioKit; estructura modular de carpetas. Cubre las tareas 0.2–0.4.
+
+Gherkin:
+
+Given el entorno de desarrollo y el repositorio clonado.
+
+When se abre el proyecto y se resuelven los paquetes SPM.
+
+Then el proyecto compila para iPad en landscape, TCA y AudioKit están enlazados al target, y la estructura de carpetas modulares está definida.
 
 3. Fase 2: Historias de Usuario (HUN) - Componentes Atómicos
 HUN-1: Componente Reutilizable "AcidKnob"
@@ -115,6 +126,6 @@ Tarea UI-2: Implementar el sistema de pestañas para alternar entre HUN-4 (Piano
 Tarea UI-3: Añadir sección de ayuda y tutorial (?).
 
 6. Fase 5: Testing Final
-Tarea T-1: Unit Tests de Reducers (validar lógica de estados).
+Tarea T-1: Tests con Swift Testing de Reducers (validar lógica de estados).
 
 Tarea T-2: Tests de integración (asegurar que el Knob realmente cambia el audio).

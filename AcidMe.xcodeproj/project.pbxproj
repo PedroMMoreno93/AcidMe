@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */; };
+		6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */; };
+		882409673B5C11AF4F05E788 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1976140D3190C10989DF090E /* ContentView.swift */; };
+		8F90CFBED1385137F71B1CE6 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */; };
+		9B6E7E9AD60C9F99D2E54C58 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */; };
+		CE304586C2F300256A022A53 /* AcidMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973DB5D629F27409804B1093 /* AcidMeApp.swift */; };
+		FDFBC7AC139584F4B17B6589 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE0F508000A1F0425A520A5C /* AudioKit */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E2452A8445B041C018830B7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 654ABD33937E513F0634547F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7BD1A3BA674C350164FE980;
+			remoteInfo = AcidMe;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1976140D3190C10989DF090E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		973DB5D629F27409804B1093 /* AcidMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidMeApp.swift; sourceTree = "<group>"; };
+		9AC895C0B136AE1C6B69968F /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
+		C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioKitBootstrap.swift; sourceTree = "<group>"; };
+		CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		D12FA876D6E8CEE040984562 /* AcidMeTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AcidMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3B5A66BD50A60974610B2A2 /* AcidMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcidMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A30770ACA73A1029869CE5B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B6E7E9AD60C9F99D2E54C58 /* ComposableArchitecture in Frameworks */,
+				FDFBC7AC139584F4B17B6589 /* AudioKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		383FE36F63A2407A11565D94 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				9AC895C0B136AE1C6B69968F /* .gitkeep */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		43F95B9EF515F4D1E5404ECF /* AcidMeTests */ = {
+			isa = PBXGroup;
+			children = (
+				A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */,
+			);
+			path = AcidMeTests;
+			sourceTree = "<group>";
+		};
+		BC3B939700711570A5E1D06F /* AcidMe */ = {
+			isa = PBXGroup;
+			children = (
+				F8FC7E2B56EAB69DD47D4126 /* App */,
+				F02A3E91733CB7016AA32242 /* Core */,
+				383FE36F63A2407A11565D94 /* Features */,
+			);
+			path = AcidMe;
+			sourceTree = "<group>";
+		};
+		D8F8A32318F3842D8E30C66F = {
+			isa = PBXGroup;
+			children = (
+				BC3B939700711570A5E1D06F /* AcidMe */,
+				43F95B9EF515F4D1E5404ECF /* AcidMeTests */,
+				F7AB879B5A95D37682B3424C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F02A3E91733CB7016AA32242 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */,
+				C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F7AB879B5A95D37682B3424C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D3B5A66BD50A60974610B2A2 /* AcidMe.app */,
+				D12FA876D6E8CEE040984562 /* AcidMeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8FC7E2B56EAB69DD47D4126 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				973DB5D629F27409804B1093 /* AcidMeApp.swift */,
+				1976140D3190C10989DF090E /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6F9828A43DD366C65B76633D /* AcidMeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6CC07F8DEF7D20B9477B482 /* Build configuration list for PBXNativeTarget "AcidMeTests" */;
+			buildPhases = (
+				67B7590AFD7C093EB251E443 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3145675DD6764A1198A9DB88 /* PBXTargetDependency */,
+			);
+			name = AcidMeTests;
+			packageProductDependencies = (
+			);
+			productName = AcidMeTests;
+			productReference = D12FA876D6E8CEE040984562 /* AcidMeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C7BD1A3BA674C350164FE980 /* AcidMe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2BE528DBF80403E20C7FBE3 /* Build configuration list for PBXNativeTarget "AcidMe" */;
+			buildPhases = (
+				98058F5026C80B0C9C59101F /* Sources */,
+				A30770ACA73A1029869CE5B5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AcidMe;
+			packageProductDependencies = (
+				EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */,
+				FE0F508000A1F0425A520A5C /* AudioKit */,
+			);
+			productName = AcidMe;
+			productReference = D3B5A66BD50A60974610B2A2 /* AcidMe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		654ABD33937E513F0634547F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = D1C63ECE971CAE1953CDAF84 /* Build configuration list for PBXProject "AcidMe" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = D8F8A32318F3842D8E30C66F;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3144243B1D33DA70B11924BD /* XCRemoteSwiftPackageReference "AudioKit" */,
+				91DB6E2117440E6F950E4F5C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C7BD1A3BA674C350164FE980 /* AcidMe */,
+				6F9828A43DD366C65B76633D /* AcidMeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		67B7590AFD7C093EB251E443 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98058F5026C80B0C9C59101F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE304586C2F300256A022A53 /* AcidMeApp.swift in Sources */,
+				8F90CFBED1385137F71B1CE6 /* AppFeature.swift in Sources */,
+				04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */,
+				882409673B5C11AF4F05E788 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3145675DD6764A1198A9DB88 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7BD1A3BA674C350164FE980 /* AcidMe */;
+			targetProxy = E2452A8445B041C018830B7E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		12E2CAF174B16E2BB150B029 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.acidme.AcidMeTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AcidMe.app/AcidMe";
+			};
+			name = Debug;
+		};
+		1464A07456FB99074F6EE2A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.acidme.AcidMe;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		1D60B3E5E772AE1E5FFECFC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.acidme.AcidMe;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		3FD01FE0357B165CC99A354C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.acidme.AcidMeTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AcidMe.app/AcidMe";
+			};
+			name = Release;
+		};
+		66427CEC26C74510CC7A6679 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B09A49060F10150370B1C19E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A6CC07F8DEF7D20B9477B482 /* Build configuration list for PBXNativeTarget "AcidMeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12E2CAF174B16E2BB150B029 /* Debug */,
+				3FD01FE0357B165CC99A354C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C2BE528DBF80403E20C7FBE3 /* Build configuration list for PBXNativeTarget "AcidMe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D60B3E5E772AE1E5FFECFC4 /* Debug */,
+				1464A07456FB99074F6EE2A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D1C63ECE971CAE1953CDAF84 /* Build configuration list for PBXProject "AcidMe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66427CEC26C74510CC7A6679 /* Debug */,
+				B09A49060F10150370B1C19E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3144243B1D33DA70B11924BD /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+		91DB6E2117440E6F950E4F5C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.16.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91DB6E2117440E6F950E4F5C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		FE0F508000A1F0425A520A5C /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3144243B1D33DA70B11924BD /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 654ABD33937E513F0634547F /* Project object */;
+}
