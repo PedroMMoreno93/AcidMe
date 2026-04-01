@@ -36,8 +36,8 @@ struct AcidMetalButtonStyle: ButtonStyle {
     private func metalFill(pressed: Bool) -> LinearGradient {
         LinearGradient(
             colors: pressed
-                ? [Color(white: 0.36), Color(white: 0.28), Color(white: 0.32)]
-                : [Color(white: 0.5), Color(white: 0.38), Color(white: 0.44)],
+                ? [Color(white: 0.32), Color(white: 0.22), Color(white: 0.27)]
+                : [Color(white: 0.42), Color(white: 0.30), Color(white: 0.36)],
             startPoint: .top,
             endPoint: .bottom
         )
@@ -47,6 +47,9 @@ struct AcidMetalButtonStyle: ButtonStyle {
 // MARK: - Vista
 
 struct AcidButton: View {
+    /// Color de etiqueta e icono (legible sobre el metal del estilo).
+    static let labelColor = Color(red: 0.04, green: 0.04, blue: 0.05)
+
     var title: String
     var systemImage: String?
     var usesHaptics: Bool = true
@@ -63,13 +66,16 @@ struct AcidButton: View {
                 if let systemImage {
                     Image(systemName: systemImage)
                         .font(.subheadline.weight(.bold))
+                        .symbolRenderingMode(.monochrome)
                 }
                 Text(title)
                     .font(.subheadline.weight(.bold))
             }
-            .foregroundStyle(Color(white: 0.12))
+            // Casi negro sobre metal gris: contraste alto (antes ~12% gris sobre ~45% gris).
+            .foregroundStyle(AcidButton.labelColor)
         }
         .buttonStyle(AcidMetalButtonStyle())
+        .tint(AcidButton.labelColor)
     }
 }
 
