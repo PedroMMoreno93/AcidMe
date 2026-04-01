@@ -1,0 +1,68 @@
+name: AcidMe
+options:
+  bundleIdPrefix: dev.acidme
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    GENERATE_INFOPLIST_FILE: YES
+    INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+    INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+
+packages:
+  swift-composable-architecture:
+    url: https://github.com/pointfreeco/swift-composable-architecture
+    from: 1.16.0
+  AudioKit:
+    url: https://github.com/AudioKit/AudioKit
+    from: 5.6.0
+
+targets:
+  AcidMe:
+    type: application
+    platform: iOS
+    sources:
+      - path: AcidMe
+        excludes:
+          - "**/.DS_Store"
+          - Resources/**
+    resources:
+      - path: AcidMe/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.acidme.AcidMe
+        TARGETED_DEVICE_FAMILY: 2
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - package: swift-composable-architecture
+        product: ComposableArchitecture
+      - package: AudioKit
+        product: AudioKit
+
+  AcidMeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: AcidMeTests
+    dependencies:
+      - target: AcidMe
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.acidme.AcidMeTests
+        TARGETED_DEVICE_FAMILY: 2
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  AcidMe:
+    build:
+      targets:
+        AcidMe: all
+        AcidMeTests: [test]
+    test:
+      targets:
+        - AcidMeTests
