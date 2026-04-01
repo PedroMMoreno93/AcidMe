@@ -11,10 +11,22 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 2 · AcidKnob + AcidToggle horizontal (toque → A/B)")
+                Text("HU 3 · Knob + Toggle + AcidButton (acción al soltar)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+
+                HStack(spacing: 16) {
+                    AcidButton(title: "PLAY", systemImage: "play.fill") {
+                        store.send(.demoPlayButtonReleased)
+                    }
+                    AcidButton(title: "CLEAR", systemImage: "trash") {
+                        store.send(.demoClearButtonReleased)
+                    }
+                    Text("PLAY \(store.demoPlayButtonReleaseCount) · CLEAR \(store.demoClearButtonReleaseCount)")
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
 
                 HStack(alignment: .center, spacing: 48) {
                     VStack(spacing: 8) {

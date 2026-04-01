@@ -10,10 +10,15 @@ struct AppFeature {
         var demoKnobValue: Double = 0.35
         /// Selección del AcidToggle (HU 2); p. ej. onda superior/inferior o FX.
         var demoToggleSelection: AcidToggleSelection = .upper
+        /// Contadores de suelta en botones demo (HU 3).
+        var demoPlayButtonReleaseCount: Int = 0
+        var demoClearButtonReleaseCount: Int = 0
     }
 
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
+        case demoPlayButtonReleased
+        case demoClearButtonReleased
     }
 
     var body: some ReducerOf<Self> {
@@ -23,6 +28,13 @@ struct AppFeature {
             case .binding:
                 // Tras cualquier binding, mantiene el knob en 0…1 (p. ej. arrastre del AcidKnob).
                 state.demoKnobValue = min(1, max(0, state.demoKnobValue))
+                return .none
+            case .demoPlayButtonReleased:
+                state.demoPlayButtonReleaseCount += 1
+                return .none
+            case .demoClearButtonReleased:
+                state.demoClearButtonReleaseCount += 1
+                state.demoKnobValue = 0
                 return .none
             }
         }
