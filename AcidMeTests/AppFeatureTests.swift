@@ -13,4 +13,17 @@ struct AppFeatureTests {
         }
         #expect(store.state == AppFeature.State())
     }
+
+    @Test
+    func demoKnobValueChanged_acotaEntreCeroYUno() async {
+        let store = TestStore(initialState: AppFeature.State(demoKnobValue: 0.5)) {
+            AppFeature()
+        }
+        await store.send(.demoKnobValueChanged(2)) {
+            $0.demoKnobValue = 1
+        }
+        await store.send(.demoKnobValueChanged(-1)) {
+            $0.demoKnobValue = 0
+        }
+    }
 }
