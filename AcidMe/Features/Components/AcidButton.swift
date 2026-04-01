@@ -1,6 +1,36 @@
 import SwiftUI
 import UIKit
 
+// MARK: - Valores testeables (contraste texto / metal)
+
+enum AcidButtonStyleMath {
+    /// Stops `Color(white:)` del relleno metálico (sin pulsar / pulsado).
+    static let metalLuminancesUnpressed: [Double] = [0.36, 0.24, 0.30]
+    static let metalLuminancesPressed: [Double] = [0.28, 0.18, 0.22]
+
+    static func averageMetalLuminance(pressed: Bool) -> Double {
+        let xs = pressed ? metalLuminancesPressed : metalLuminancesUnpressed
+        return xs.reduce(0, +) / Double(xs.count)
+    }
+
+    /// RGB del gradiente de etiqueta (sRGB 0…1).
+    static let labelTopRGB = (r: 1.0, g: 0.99, b: 0.95)
+    static let labelBottomRGB = (r: 0.94, g: 0.90, b: 0.82)
+
+    private static func sdrLuminance(_ rgb: (r: Double, g: Double, b: Double)) -> Double {
+        0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b
+    }
+
+    static func averageLabelLuminance() -> Double {
+        (sdrLuminance(labelTopRGB) + sdrLuminance(labelBottomRGB)) / 2
+    }
+
+    /// Regresión: el texto claro debe destacar claramente sobre el metal.
+    static func labelIsBrighterThanMetal(pressed: Bool, margin: Double = 0.22) -> Bool {
+        averageLabelLuminance() > averageMetalLuminance(pressed: pressed) + margin
+    }
+}
+
 // MARK: - Estilo
 
 /// Botón metálico: aspecto “pulsado” mientras el dedo está abajo; la acción de SwiftUI se ejecuta al **soltar** dentro del área (Gherkin HU 3).
@@ -34,11 +64,11 @@ struct AcidMetalButtonStyle: ButtonStyle {
     }
 
     private func metalFill(pressed: Bool) -> LinearGradient {
-        // Metal más oscuro que antes para que el texto claro contraste bien.
-        LinearGradient(
-            colors: pressed
-                ? [Color(white: 0.28), Color(white: 0.18), Color(white: 0.22)]
-                : [Color(white: 0.36), Color(white: 0.24), Color(white: 0.30)],
+        let stops = pressed
+            ? AcidButtonStyleMath.metalLuminancesPressed
+            : AcidButtonStyleMath.metalLuminancesUnpressed
+        return LinearGradient(
+            colors: stops.map { Color(white: $0) },
             startPoint: .top,
             endPoint: .bottom
         )
@@ -72,8 +102,16 @@ struct AcidButton: View {
             .foregroundStyle(
                 LinearGradient(
                     colors: [
-                        Color(red: 1, green: 0.99, blue: 0.95),
-                        Color(red: 0.94, green: 0.90, blue: 0.82),
+                        Color(
+                            red: AcidButtonStyleMath.labelTopRGB.r,
+                            green: AcidButtonStyleMath.labelTopRGB.g,
+                            blue: AcidButtonStyleMath.labelTopRGB.b
+                        ),
+                        Color(
+                            red: AcidButtonStyleMath.labelBottomRGB.r,
+                            green: AcidButtonStyleMath.labelBottomRGB.g,
+                            blue: AcidButtonStyleMath.labelBottomRGB.b
+                        ),
                     ],
                     startPoint: .top,
                     endPoint: .bottom

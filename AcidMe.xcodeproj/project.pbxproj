@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */; };
 		05B28052F24782E2405EA953 /* AcidToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72527E242323BE0F165CB92F /* AcidToggle.swift */; };
+		2AEDF4A5F7DDC8BD1B9746AE /* AcidButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C74C92758A1EC6F49F23E30 /* AcidButtonTests.swift */; };
 		6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */; };
 		86E3B0D5A89CC26FCF922CCB /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE0F508000A1F0425A520A5C /* AudioKit */; };
 		882409673B5C11AF4F05E788 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1976140D3190C10989DF090E /* ContentView.swift */; };
@@ -36,6 +37,7 @@
 		0083D446F27199C7C8DCF084 /* AcidToggleSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidToggleSelectionTests.swift; sourceTree = "<group>"; };
 		1429EFE4D1429D0BC5C55E16 /* AcidKnobMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKnobMathTests.swift; sourceTree = "<group>"; };
 		1976140D3190C10989DF090E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1C74C92758A1EC6F49F23E30 /* AcidButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidButtonTests.swift; sourceTree = "<group>"; };
 		3D9B647A79ED1E0E065B36D8 /* AcidButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidButton.swift; sourceTree = "<group>"; };
 		72527E242323BE0F165CB92F /* AcidToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidToggle.swift; sourceTree = "<group>"; };
 		85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKnob.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		43F95B9EF515F4D1E5404ECF /* AcidMeTests */ = {
 			isa = PBXGroup;
 			children = (
+				1C74C92758A1EC6F49F23E30 /* AcidButtonTests.swift */,
 				1429EFE4D1429D0BC5C55E16 /* AcidKnobMathTests.swift */,
 				0083D446F27199C7C8DCF084 /* AcidToggleSelectionTests.swift */,
 				A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */,
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AEDF4A5F7DDC8BD1B9746AE /* AcidButtonTests.swift in Sources */,
 				94C22E137E1F1ABC8FACA7FB /* AcidKnobMathTests.swift in Sources */,
 				97B807EE9805154AC7842C7A /* AcidToggleSelectionTests.swift in Sources */,
 				6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */,
