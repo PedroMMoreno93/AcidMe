@@ -39,4 +39,25 @@ struct AppFeatureTests {
             $0.demoToggleSelection = .upper
         }
     }
+
+    @Test
+    func demoPlayButtonReleased_incrementaContador() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        await store.send(.demoPlayButtonReleased) {
+            $0.demoPlayButtonReleaseCount = 1
+        }
+    }
+
+    @Test
+    func demoClearButtonReleased_incrementaYReseteaKnob() async {
+        let store = TestStore(initialState: AppFeature.State(demoKnobValue: 0.8)) {
+            AppFeature()
+        }
+        await store.send(.demoClearButtonReleased) {
+            $0.demoClearButtonReleaseCount = 1
+            $0.demoKnobValue = 0
+        }
+    }
 }

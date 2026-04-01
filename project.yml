@@ -71,3 +71,9 @@ schemes:
     test:
       targets:
         - AcidMeTests
+      testPlans:
+        - path: AcidMe.xctestplan
+          default: true
+      gatherCoverageData: true
+      coverageTargets:
+        - AcidMe
