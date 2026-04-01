@@ -4,7 +4,7 @@ Repositorio: GitHub.
 
 Ramas: main <- develop <- feat/HUN-X_descripcion.
 
-Protocolo: Las ramas nacen de develop. Se requiere Unit Test y Snapshot Test (si aplica) para abrir PR.
+Protocolo: Las ramas nacen de develop. Se requiere **Swift Testing** y Snapshot Test (si aplica) para abrir PR.
 
 Gestión: GitHub Project con etiquetas Enhancement.
 
@@ -126,6 +126,6 @@ Tarea UI-2: Implementar el sistema de pestañas para alternar entre HUN-4 (Piano
 Tarea UI-3: Añadir sección de ayuda y tutorial (?).
 
 6. Fase 5: Testing Final
-Tarea T-1: Unit Tests de Reducers (validar lógica de estados).
+Tarea T-1: Tests con Swift Testing de Reducers (validar lógica de estados).
 
 Tarea T-2: Tests de integración (asegurar que el Knob realmente cambia el audio).

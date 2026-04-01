@@ -1,14 +1,16 @@
 import ComposableArchitecture
-import XCTest
+import Testing
 
 @testable import AcidMe
 
 @MainActor
-final class AppFeatureTests: XCTestCase {
+@Suite
+struct AppFeatureTests {
+    @Test
     func testInitialState() {
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
         }
-        XCTAssertEqual(store.state, AppFeature.State())
+        #expect(store.state == AppFeature.State())
     }
 }
