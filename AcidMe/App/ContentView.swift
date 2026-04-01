@@ -2,8 +2,9 @@ import ComposableArchitecture
 import SwiftUI
 
 struct AppView: View {
-    let store: StoreOf<AppFeature>
-    
+    /// `@Bindable` evita avisos de Perception al crear `Binding` que leen `store.*` (p. ej. `demoKnobValue`).
+    @Bindable var store: StoreOf<AppFeature>
+
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 24) {
