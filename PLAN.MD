@@ -17,6 +17,17 @@ Tarea 0.3 [Setup]: Instalación de SPM (TCA y AudioKit).
 
 Tarea 0.4 [Setup]: Estructura modular de carpetas.
 
+HU 0: Creación y configuración del proyecto Xcode
+Descripción: Proyecto Xcode (iPad, iOS 16+, Landscape) que compile; SPM con TCA y AudioKit; estructura modular de carpetas. Cubre las tareas 0.2–0.4.
+
+Gherkin:
+
+Given el entorno de desarrollo y el repositorio clonado.
+
+When se abre el proyecto y se resuelven los paquetes SPM.
+
+Then el proyecto compila para iPad en landscape, TCA y AudioKit están enlazados al target, y la estructura de carpetas modulares está definida.
+
 3. Fase 2: Historias de Usuario (HUN) - Componentes Atómicos
 HUN-1: Componente Reutilizable "AcidKnob"
 Descripción: Crear un control rotatorio táctil con estética metálica para los parámetros de síntesis.
