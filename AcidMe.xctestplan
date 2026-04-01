@@ -1,0 +1,39 @@
+{
+  "configurations" : [
+    {
+      "id" : "DE13BF63-0D12-412F-8FD6-7531B2DD3AA6",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:AcidMe.xcodeproj",
+          "identifier" : "C7BD1A3BA674C350164FE980",
+          "name" : "AcidMe"
+        }
+      ]
+    },
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:AcidMe.xcodeproj",
+      "identifier" : "C7BD1A3BA674C350164FE980",
+      "name" : "AcidMe"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:AcidMe.xcodeproj",
+        "identifier" : "6F9828A43DD366C65B76633D",
+        "name" : "AcidMeTests"
+      }
+    }
+  ],
+  "version" : 1
+}
