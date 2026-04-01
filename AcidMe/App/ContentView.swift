@@ -2,7 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct AppView: View {
-    /// `@Bindable` evita avisos de Perception al crear `Binding` que leen `store.*` (p. ej. `demoKnobValue`).
+    /// Con `BindingReducer`, las proyecciones `$store.*` están enlazadas a Perception (sin `Binding { get set }` manual).
     @Bindable var store: StoreOf<AppFeature>
 
     var body: some View {
@@ -18,10 +18,7 @@ struct AppView: View {
                 HStack(alignment: .center, spacing: 48) {
                     VStack(spacing: 8) {
                         AcidKnob(
-                            value: Binding(
-                                get: { store.demoKnobValue },
-                                set: { store.send(.demoKnobValueChanged($0)) }
-                            ),
+                            value: $store.demoKnobValue,
                             label: "DEMO"
                         )
                         Text(String(format: "valor: %.3f", store.demoKnobValue))
@@ -30,10 +27,7 @@ struct AppView: View {
                     }
 
                     AcidToggle(
-                        selection: Binding(
-                            get: { store.demoToggleSelection },
-                            set: { store.send(.demoToggleSelectionChanged($0)) }
-                        ),
+                        selection: $store.demoToggleSelection,
                         leadingLabel: "SAW",
                         trailingLabel: "SQR"
                     )

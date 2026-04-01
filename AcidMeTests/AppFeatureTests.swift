@@ -15,27 +15,27 @@ struct AppFeatureTests {
     }
 
     @Test
-    func demoKnobValueChanged_acotaEntreCeroYUno() async {
+    func binding_demoKnobValue_acotaEntreCeroYUno() async {
         let store = TestStore(initialState: AppFeature.State(demoKnobValue: 0.5)) {
             AppFeature()
         }
-        await store.send(.demoKnobValueChanged(2)) {
+        await store.send(.binding(.set(\.demoKnobValue, 2))) {
             $0.demoKnobValue = 1
         }
-        await store.send(.demoKnobValueChanged(-1)) {
+        await store.send(.binding(.set(\.demoKnobValue, -1))) {
             $0.demoKnobValue = 0
         }
     }
 
     @Test
-    func demoToggleSelectionChanged_actualizaEstado() async {
+    func binding_demoToggleSelection_actualizaEstado() async {
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
         }
-        await store.send(.demoToggleSelectionChanged(.lower)) {
+        await store.send(.binding(.set(\.demoToggleSelection, .lower))) {
             $0.demoToggleSelection = .lower
         }
-        await store.send(.demoToggleSelectionChanged(.upper)) {
+        await store.send(.binding(.set(\.demoToggleSelection, .upper))) {
             $0.demoToggleSelection = .upper
         }
     }

@@ -12,19 +12,17 @@ struct AppFeature {
         var demoToggleSelection: AcidToggleSelection = .upper
     }
 
-    enum Action: Equatable {
-        case demoKnobValueChanged(Double)
-        case demoToggleSelectionChanged(AcidToggleSelection)
+    enum Action: BindableAction, Equatable {
+        case binding(BindingAction<State>)
     }
 
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
-            case let .demoKnobValueChanged(v):
-                state.demoKnobValue = min(1, max(0, v))
-                return .none
-            case let .demoToggleSelectionChanged(sel):
-                state.demoToggleSelection = sel
+            case .binding:
+                // Tras cualquier binding, mantiene el knob en 0…1 (p. ej. arrastre del AcidKnob).
+                state.demoKnobValue = min(1, max(0, state.demoKnobValue))
                 return .none
             }
         }
