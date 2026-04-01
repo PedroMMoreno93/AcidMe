@@ -9,7 +9,7 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 2 · AcidKnob + AcidToggle (toque → A/B)")
+                Text("HU 2 · AcidKnob + AcidToggle horizontal (toque → A/B)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -33,8 +33,8 @@ struct AppView: View {
                             get: { store.demoToggleSelection },
                             set: { store.send(.demoToggleSelectionChanged($0)) }
                         ),
-                        upperLabel: "SAW",
-                        lowerLabel: "SQR"
+                        leadingLabel: "SAW",
+                        trailingLabel: "SQR"
                     )
 
                     Text(store.demoToggleSelection == .upper ? "Onda: sierra" : "Onda: cuadrada")

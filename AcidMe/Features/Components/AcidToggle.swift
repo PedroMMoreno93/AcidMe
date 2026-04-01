@@ -3,7 +3,7 @@ import UIKit
 
 // MARK: - Modelo (testeable)
 
-/// Posición del interruptor vertical (p. ej. forma de onda A/B o FX off/on).
+/// Dos posiciones del interruptor: **`.upper`** = extremo **leading** (izquierda en LTR), **`.lower`** = **trailing** (derecha).
 enum AcidToggleSelection: Equatable, CaseIterable {
     case upper
     case lower
@@ -19,32 +19,40 @@ enum AcidToggleSelection: Equatable, CaseIterable {
 
 // MARK: - Vista
 
-/// Interruptor **vertical** estilo hardware: dos posiciones; un **toque** alterna y actualiza el binding.
+/// Interruptor **horizontal** estilo hardware: carril ancho, thumb izquierda/derecha; un **toque** alterna el binding.
 struct AcidToggle: View {
     @Binding var selection: AcidToggleSelection
-    var upperLabel: String
-    var lowerLabel: String
-    var trackWidth: CGFloat = 40
-    var trackHeight: CGFloat = 104
+    /// Etiqueta del lado **leading** (opción `.upper`).
+    var leadingLabel: String
+    /// Etiqueta del lado **trailing** (opción `.lower`).
+    var trailingLabel: String
+    /// Longitud horizontal del carril.
+    var trackWidth: CGFloat = 104
+    /// Grosor vertical del carril.
+    var trackHeight: CGFloat = 40
     var usesHaptics: Bool = true
 
     private let thumbSize: CGFloat = 28
 
-    private var thumbCenterY: CGFloat {
+    private var thumbCenterX: CGFloat {
         switch selection {
         case .upper:
-            return trackHeight * 0.28
+            return trackWidth * 0.28
         case .lower:
-            return trackHeight * 0.72
+            return trackWidth * 0.72
         }
     }
 
+    private var trackCornerRadius: CGFloat {
+        trackHeight / 2
+    }
+
     var body: some View {
-        VStack(spacing: 8) {
-            Text(upperLabel)
+        HStack(alignment: .center, spacing: 10) {
+            Text(leadingLabel)
                 .font(.caption2.weight(.semibold))
                 .foregroundStyle(.secondary)
-                .frame(minWidth: trackWidth + 24)
+                .frame(minWidth: 36, alignment: .trailing)
 
             ZStack {
                 trackChrome
@@ -56,14 +64,14 @@ struct AcidToggle: View {
                 toggleSelection()
             }
 
-            Text(lowerLabel)
+            Text(trailingLabel)
                 .font(.caption2.weight(.semibold))
                 .foregroundStyle(.secondary)
-                .frame(minWidth: trackWidth + 24)
+                .frame(minWidth: 36, alignment: .leading)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(upperLabel) o \(lowerLabel)")
-        .accessibilityValue(selection == .upper ? upperLabel : lowerLabel)
+        .accessibilityLabel("\(leadingLabel) o \(trailingLabel)")
+        .accessibilityValue(selection == .upper ? leadingLabel : trailingLabel)
         .accessibilityAddTraits(.isButton)
         .accessibilityAction(named: "Alternar") {
             toggleSelection()
@@ -71,7 +79,7 @@ struct AcidToggle: View {
     }
 
     private var trackChrome: some View {
-        RoundedRectangle(cornerRadius: trackWidth / 2, style: .continuous)
+        RoundedRectangle(cornerRadius: trackCornerRadius, style: .continuous)
             .fill(
                 LinearGradient(
                     colors: [
@@ -79,12 +87,12 @@ struct AcidToggle: View {
                         Color(white: 0.32),
                         Color(white: 0.4),
                     ],
-                    startPoint: .leading,
-                    endPoint: .trailing
+                    startPoint: .top,
+                    endPoint: .bottom
                 )
             )
             .overlay(
-                RoundedRectangle(cornerRadius: trackWidth / 2, style: .continuous)
+                RoundedRectangle(cornerRadius: trackCornerRadius, style: .continuous)
                     .strokeBorder(
                         LinearGradient(
                             colors: [
@@ -120,7 +128,7 @@ struct AcidToggle: View {
                     .strokeBorder(Color(white: 0.2), lineWidth: 1)
             )
             .frame(width: thumbSize, height: thumbSize)
-            .position(x: trackWidth / 2, y: thumbCenterY)
+            .position(x: thumbCenterX, y: trackHeight / 2)
     }
 
     private func toggleSelection() {
@@ -141,8 +149,8 @@ struct AcidToggle: View {
                 Color.black.opacity(0.15)
                 AcidToggle(
                     selection: $sel,
-                    upperLabel: "SAW",
-                    lowerLabel: "SQR"
+                    leadingLabel: "SAW",
+                    trailingLabel: "SQR"
                 )
             }
         }
