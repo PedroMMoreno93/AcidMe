@@ -34,10 +34,11 @@ struct AcidMetalButtonStyle: ButtonStyle {
     }
 
     private func metalFill(pressed: Bool) -> LinearGradient {
+        // Metal más oscuro que antes para que el texto claro contraste bien.
         LinearGradient(
             colors: pressed
-                ? [Color(white: 0.32), Color(white: 0.22), Color(white: 0.27)]
-                : [Color(white: 0.42), Color(white: 0.30), Color(white: 0.36)],
+                ? [Color(white: 0.28), Color(white: 0.18), Color(white: 0.22)]
+                : [Color(white: 0.36), Color(white: 0.24), Color(white: 0.30)],
             startPoint: .top,
             endPoint: .bottom
         )
@@ -47,9 +48,6 @@ struct AcidMetalButtonStyle: ButtonStyle {
 // MARK: - Vista
 
 struct AcidButton: View {
-    /// Color de etiqueta e icono (legible sobre el metal del estilo).
-    static let labelColor = Color(red: 0.04, green: 0.04, blue: 0.05)
-
     var title: String
     var systemImage: String?
     var usesHaptics: Bool = true
@@ -71,11 +69,21 @@ struct AcidButton: View {
                 Text(title)
                     .font(.subheadline.weight(.bold))
             }
-            // Casi negro sobre metal gris: contraste alto (antes ~12% gris sobre ~45% gris).
-            .foregroundStyle(AcidButton.labelColor)
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [
+                        Color(red: 1, green: 0.99, blue: 0.95),
+                        Color(red: 0.94, green: 0.90, blue: 0.82),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            // Contorno suave para leer sobre zonas claras del bisel metálico.
+            .shadow(color: .black.opacity(0.55), radius: 0, x: 0, y: 1)
         }
         .buttonStyle(AcidMetalButtonStyle())
-        .tint(AcidButton.labelColor)
+        .tint(.white)
     }
 }
 
