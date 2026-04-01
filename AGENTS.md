@@ -19,7 +19,7 @@ Documento de contexto técnico y resumen de requisitos. El detalle completo est�
 | Persistencia de sesión | **UserDefaults** o **filesystem** — estado del reducer TCA |
 | Reloj del secuenciador | **AudioClient** que exponga un **AsyncStream** de ticks desde el motor de audio hacia TCA |
 
-Convención de trabajo (ver `PLAN.MD`): ramas `main` ← `develop` ← `feat/...`; PRs con tests (unitarios y snapshot cuando aplique).
+Convención de trabajo (ver `PLAN.MD`): ramas `main` ← `develop` ← `feat/...`; **rama por defecto en GitHub:** `develop`. PRs con tests (unitarios y snapshot cuando aplique).
 
 ## Cadena de audio (orden fijo)
 

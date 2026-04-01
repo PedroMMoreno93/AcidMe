@@ -3,9 +3,9 @@ import SwiftUI
 
 struct AppView: View {
     let store: StoreOf<AppFeature>
-
+    
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { _ in
+        WithPerceptionTracking {
             VStack(spacing: 16) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())

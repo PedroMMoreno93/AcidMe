@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,12 +29,12 @@
 /* Begin PBXFileReference section */
 		1976140D3190C10989DF090E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		973DB5D629F27409804B1093 /* AcidMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidMeApp.swift; sourceTree = "<group>"; };
-		9AC895C0B136AE1C6B69968F /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		9AC895C0B136AE1C6B69968F /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
 		C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioKitBootstrap.swift; sourceTree = "<group>"; };
 		CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		D12FA876D6E8CEE040984562 /* AcidMeTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AcidMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3B5A66BD50A60974610B2A2 /* AcidMe.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AcidMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3B5A66BD50A60974610B2A2 /* AcidMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcidMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +176,6 @@
 				3144243B1D33DA70B11924BD /* XCRemoteSwiftPackageReference "AudioKit" */,
 				91DB6E2117440E6F950E4F5C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -245,6 +244,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.acidme.AcidMe;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -260,6 +263,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.acidme.AcidMe;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
