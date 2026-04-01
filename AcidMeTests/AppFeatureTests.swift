@@ -26,4 +26,17 @@ struct AppFeatureTests {
             $0.demoKnobValue = 0
         }
     }
+
+    @Test
+    func demoToggleSelectionChanged_actualizaEstado() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        await store.send(.demoToggleSelectionChanged(.lower)) {
+            $0.demoToggleSelection = .lower
+        }
+        await store.send(.demoToggleSelectionChanged(.upper)) {
+            $0.demoToggleSelection = .upper
+        }
+    }
 }

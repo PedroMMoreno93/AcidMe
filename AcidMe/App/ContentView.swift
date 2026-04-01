@@ -9,22 +9,39 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 1 · AcidKnob (arrastre vertical → 0…1)")
+                Text("HU 2 · AcidKnob + AcidToggle (toque → A/B)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
 
-                AcidKnob(
-                    value: Binding(
-                        get: { store.demoKnobValue },
-                        set: { store.send(.demoKnobValueChanged($0)) }
-                    ),
-                    label: "DEMO"
-                )
+                HStack(alignment: .center, spacing: 48) {
+                    VStack(spacing: 8) {
+                        AcidKnob(
+                            value: Binding(
+                                get: { store.demoKnobValue },
+                                set: { store.send(.demoKnobValueChanged($0)) }
+                            ),
+                            label: "DEMO"
+                        )
+                        Text(String(format: "valor: %.3f", store.demoKnobValue))
+                            .font(.caption.monospacedDigit())
+                            .foregroundStyle(.tertiary)
+                    }
 
-                Text(String(format: "valor: %.3f", store.demoKnobValue))
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.tertiary)
+                    AcidToggle(
+                        selection: Binding(
+                            get: { store.demoToggleSelection },
+                            set: { store.send(.demoToggleSelectionChanged($0)) }
+                        ),
+                        upperLabel: "SAW",
+                        lowerLabel: "SQR"
+                    )
+
+                    Text(store.demoToggleSelection == .upper ? "Onda: sierra" : "Onda: cuadrada")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .frame(minWidth: 120, alignment: .leading)
+                }
 
                 if AudioKitBootstrap.isModuleLinked {
                     Text("AudioKit enlazado")

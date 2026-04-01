@@ -42,7 +42,7 @@ Serie lineal: **Oscilador (sierra/cuadrado)** → **Filtro ladder** (cutoff, res
 
 - La definición del target vive en **`project.yml`** ([XcodeGen](https://github.com/yonaskolb/XcodeGen)). Tras cambiar el YAML: `xcodegen generate` en la raíz del repo.
 - Abre **`AcidMe.xcodeproj`** en Xcode, deja que resuelva los paquetes (**File → Packages → Resolve Package Versions**) y compila el esquema **AcidMe** con destino **iPad** (simulador o dispositivo).
-- Estructura de código: `AcidMe/App` (entrada SwiftUI), `AcidMe/Core` (TCA raíz, enganche AudioKit), `AcidMe/Features/Components` (controles reutilizables; p. ej. **AcidKnob** en HU 1), `AcidMe/Resources` (Assets).
+- Estructura de código: `AcidMe/App` (entrada SwiftUI), `AcidMe/Core` (TCA raíz, enganche AudioKit), `AcidMe/Features/Components` (controles reutilizables: **AcidKnob**, **AcidToggle**), `AcidMe/Resources` (Assets).
 
 ## Fuentes de verdad
 
