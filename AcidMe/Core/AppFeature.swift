@@ -5,13 +5,22 @@ import Foundation
 @Reducer
 struct AppFeature {
     @ObservableState
-    struct State: Equatable {}
+    struct State: Equatable {
+        /// Valor de demostración del AcidKnob (HU 1); más adelante se sustituirá por parámetros reales de síntesis.
+        var demoKnobValue: Double = 0.35
+    }
 
-    enum Action: Equatable {}
+    enum Action: Equatable {
+        case demoKnobValueChanged(Double)
+    }
 
     var body: some ReducerOf<Self> {
-        Reduce { _, _ in
-            .none
+        Reduce { state, action in
+            switch action {
+            case let .demoKnobValueChanged(v):
+                state.demoKnobValue = min(1, max(0, v))
+                return .none
+            }
         }
     }
 }

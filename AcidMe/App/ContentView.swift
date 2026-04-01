@@ -6,13 +6,26 @@ struct AppView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 16) {
+            VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 0 · iPad · Landscape · TCA + AudioKit")
+                Text("HU 1 · AcidKnob (arrastre vertical → 0…1)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+
+                AcidKnob(
+                    value: Binding(
+                        get: { store.demoKnobValue },
+                        set: { store.send(.demoKnobValueChanged($0)) }
+                    ),
+                    label: "DEMO"
+                )
+
+                Text(String(format: "valor: %.3f", store.demoKnobValue))
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.tertiary)
+
                 if AudioKitBootstrap.isModuleLinked {
                     Text("AudioKit enlazado")
                         .font(.caption2)
