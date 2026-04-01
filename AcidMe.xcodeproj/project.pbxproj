@@ -10,6 +10,7 @@
 		04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */; };
 		05B28052F24782E2405EA953 /* AcidToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72527E242323BE0F165CB92F /* AcidToggle.swift */; };
 		6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */; };
+		86E3B0D5A89CC26FCF922CCB /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE0F508000A1F0425A520A5C /* AudioKit */; };
 		882409673B5C11AF4F05E788 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1976140D3190C10989DF090E /* ContentView.swift */; };
 		8F90CFBED1385137F71B1CE6 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */; };
 		94C22E137E1F1ABC8FACA7FB /* AcidKnobMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429EFE4D1429D0BC5C55E16 /* AcidKnobMathTests.swift */; };
@@ -17,7 +18,7 @@
 		9B6E7E9AD60C9F99D2E54C58 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */; };
 		CE304586C2F300256A022A53 /* AcidMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973DB5D629F27409804B1093 /* AcidMeApp.swift */; };
 		E0A9144D29558897D8FD1ED3 /* AcidKnob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */; };
-		FDFBC7AC139584F4B17B6589 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE0F508000A1F0425A520A5C /* AudioKit */; };
+		FDFBC7AC139584F4B17B6589 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0348C6BA11532A7A728F65 /* Perception */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +51,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B6E7E9AD60C9F99D2E54C58 /* ComposableArchitecture in Frameworks */,
-				FDFBC7AC139584F4B17B6589 /* AudioKit in Frameworks */,
+				FDFBC7AC139584F4B17B6589 /* Perception in Frameworks */,
+				86E3B0D5A89CC26FCF922CCB /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +167,7 @@
 			name = AcidMe;
 			packageProductDependencies = (
 				EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */,
+				2D0348C6BA11532A7A728F65 /* Perception */,
 				FE0F508000A1F0425A520A5C /* AudioKit */,
 			);
 			productName = AcidMe;
@@ -193,6 +196,7 @@
 			packageReferences = (
 				3144243B1D33DA70B11924BD /* XCRemoteSwiftPackageReference "AudioKit" */,
 				91DB6E2117440E6F950E4F5C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				CBE0DC747D6DE90C23370B8C /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
@@ -481,9 +485,22 @@
 				minimumVersion = 1.16.0;
 			};
 		};
+		CBE0DC747D6DE90C23370B8C /* XCRemoteSwiftPackageReference "swift-perception" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-perception";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2D0348C6BA11532A7A728F65 /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBE0DC747D6DE90C23370B8C /* XCRemoteSwiftPackageReference "swift-perception" */;
+			productName = Perception;
+		};
 		EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 91DB6E2117440E6F950E4F5C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

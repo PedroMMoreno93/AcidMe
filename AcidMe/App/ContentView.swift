@@ -1,9 +1,10 @@
 import ComposableArchitecture
+import Perception
 import SwiftUI
 
 struct AppView: View {
-    /// Con `BindingReducer`, las proyecciones `$store.*` están enlazadas a Perception (sin `Binding { get set }` manual).
-    @Bindable var store: StoreOf<AppFeature>
+    /// `Perception.Bindable` evita la ambigüedad con `SwiftUI.Bindable` y enlaza el `Store` a Perception.
+    @Perception.Bindable var store: StoreOf<AppFeature>
 
     var body: some View {
         WithPerceptionTracking {
