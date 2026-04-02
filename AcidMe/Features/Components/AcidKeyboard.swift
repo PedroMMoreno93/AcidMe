@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import UIKit
 
 // MARK: - Matemática (testeable)
 
@@ -30,6 +31,20 @@ enum AcidKeyboardMath {
     static let blackKeyWhiteSlotIndices: [(Int, Int)] = [
         (0, 1), (1, 2), (3, 4), (4, 5), (5, 6),
     ]
+
+    /// Nombre de la nota **do** inferior del teclado (p. ej. MIDI 60 → \"C4\").
+    static func rootOctaveScientificName(rootMidi: Int) -> String {
+        let m = min(127, max(0, rootMidi))
+        let octaveNumber = m / 12 - 1
+        return "C\(octaveNumber)"
+    }
+
+    /// Texto de desplazamiento de octava respecto a C4: `0`, `+1`, `-2`, …
+    static func octaveOffsetDisplay(offset: Int) -> String {
+        if offset == 0 { return "0" }
+        if offset > 0 { return "+\(offset)" }
+        return "\(offset)"
+    }
 }
 
 // MARK: - Tecla
@@ -139,24 +154,7 @@ struct AcidKeyboard: View {
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
                 Spacer()
-                HStack(spacing: 8) {
-                    Text("Octava")
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
-                    Stepper(
-                        value: Binding(
-                            get: { octaveOffset },
-                            set: { onOctaveOffsetChange($0) }
-                        ),
-                        in: AcidKeyboardMath.minOctaveOffset ... AcidKeyboardMath.maxOctaveOffset,
-                        label: {
-                            Text(octaveLabel)
-                                .font(.caption.monospacedDigit())
-                                .foregroundStyle(.secondary)
-                                .frame(minWidth: 72, alignment: .trailing)
-                        }
-                    )
-                }
+                octaveSelectorRow
             }
 
             GeometryReader { geo in
@@ -215,13 +213,70 @@ struct AcidKeyboard: View {
             .frame(height: keyboardHeight)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Teclado musical, una octava, octava \(octaveLabel)")
+        .accessibilityLabel(
+            "Teclado musical, una octava, desplazamiento de octava \(AcidKeyboardMath.octaveOffsetDisplay(offset: octaveOffset))"
+        )
     }
 
-    private var octaveLabel: String {
-        if octaveOffset == 0 { return "C4 (±0)" }
-        let sign = octaveOffset > 0 ? "+" : ""
-        return "\(sign)\(octaveOffset)"
+    private var octaveSelectorRow: some View {
+        HStack(spacing: 14) {
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                onOctaveOffsetChange(octaveOffset - 1)
+            } label: {
+                Text("-")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .frame(minWidth: 22, minHeight: 22)
+                    .foregroundStyle(acidMetalLabelGradient)
+                    .shadow(color: .black.opacity(0.55), radius: 0, x: 0, y: 1)
+            }
+            .buttonStyle(AcidMetalButtonStyle(horizontalPadding: 14, verticalPadding: 10))
+            .disabled(octaveOffset <= AcidKeyboardMath.minOctaveOffset)
+            .opacity(octaveOffset <= AcidKeyboardMath.minOctaveOffset ? 0.42 : 1)
+            .accessibilityLabel("Bajar una octava")
+
+            Text(AcidKeyboardMath.octaveOffsetDisplay(offset: octaveOffset))
+                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .monospacedDigit()
+                .foregroundStyle(Color(white: 0.12))
+                .frame(minWidth: 56)
+                .multilineTextAlignment(.center)
+                .accessibilityLabel("Octava \(AcidKeyboardMath.octaveOffsetDisplay(offset: octaveOffset))")
+
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                onOctaveOffsetChange(octaveOffset + 1)
+            } label: {
+                Text("+")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .frame(minWidth: 22, minHeight: 22)
+                    .foregroundStyle(acidMetalLabelGradient)
+                    .shadow(color: .black.opacity(0.55), radius: 0, x: 0, y: 1)
+            }
+            .buttonStyle(AcidMetalButtonStyle(horizontalPadding: 14, verticalPadding: 10))
+            .disabled(octaveOffset >= AcidKeyboardMath.maxOctaveOffset)
+            .opacity(octaveOffset >= AcidKeyboardMath.maxOctaveOffset ? 0.42 : 1)
+            .accessibilityLabel("Subir una octava")
+        }
+    }
+
+    private var acidMetalLabelGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(
+                    red: AcidButtonStyleMath.labelTopRGB.r,
+                    green: AcidButtonStyleMath.labelTopRGB.g,
+                    blue: AcidButtonStyleMath.labelTopRGB.b
+                ),
+                Color(
+                    red: AcidButtonStyleMath.labelBottomRGB.r,
+                    green: AcidButtonStyleMath.labelBottomRGB.g,
+                    blue: AcidButtonStyleMath.labelBottomRGB.b
+                ),
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
     }
 
     private func whiteLabel(semitone: Int) -> String {

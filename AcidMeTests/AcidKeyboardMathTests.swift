@@ -40,4 +40,20 @@ struct AcidKeyboardMathTests {
         #expect(low == AcidKeyboardMath.frequencyHz(midiNote: 0))
         #expect(high == AcidKeyboardMath.frequencyHz(midiNote: 127))
     }
+
+    @Test
+    func rootOctaveScientificName() {
+        #expect(AcidKeyboardMath.rootOctaveScientificName(rootMidi: 60) == "C4")
+        #expect(AcidKeyboardMath.rootOctaveScientificName(rootMidi: 48) == "C3")
+        #expect(AcidKeyboardMath.rootOctaveScientificName(rootMidi: 12) == "C0")
+    }
+
+    @Test
+    func octaveOffsetDisplay() {
+        #expect(AcidKeyboardMath.octaveOffsetDisplay(offset: 0) == "0")
+        #expect(AcidKeyboardMath.octaveOffsetDisplay(offset: 1) == "+1")
+        #expect(AcidKeyboardMath.octaveOffsetDisplay(offset: 3) == "+3")
+        #expect(AcidKeyboardMath.octaveOffsetDisplay(offset: -1) == "-1")
+        #expect(AcidKeyboardMath.octaveOffsetDisplay(offset: -3) == "-3")
+    }
 }

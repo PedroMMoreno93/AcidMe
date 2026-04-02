@@ -6,6 +6,19 @@ import Foundation
 struct AppFeature {
     @ObservableState
     struct State: Equatable {
+        static func == (lhs: AppFeature.State, rhs: AppFeature.State) -> Bool {
+            return lhs.demoKnobValue == rhs.demoKnobValue
+            && lhs.demoToggleSelection == rhs.demoToggleSelection
+            && lhs.demoPlayButtonReleaseCount == rhs.demoPlayButtonReleaseCount
+            && lhs.demoClearButtonReleaseCount == rhs.demoClearButtonReleaseCount
+            && lhs.pianoRollGridSteps == rhs.pianoRollGridSteps
+            && lhs.pianoRollNotes == rhs.pianoRollNotes
+            && lhs.keyboardOctaveOffset == rhs.keyboardOctaveOffset
+            && lhs.keyboardPressedMidiNotes == rhs.keyboardPressedMidiNotes
+            && lhs.keyboardLastNoteOn?.midiNote == rhs.keyboardLastNoteOn?.midiNote
+            && lhs.keyboardLastNoteOn?.frequencyHz == rhs.keyboardLastNoteOn?.frequencyHz
+        }
+
         /// Valor de demostración del AcidKnob (HU 1); más adelante se sustituirá por parámetros reales de síntesis.
         var demoKnobValue: Double = 0.35
         /// Selección del AcidToggle (HU 2); p. ej. onda superior/inferior o FX.
