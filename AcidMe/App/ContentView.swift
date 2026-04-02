@@ -11,10 +11,25 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 3 · Knob + Toggle + AcidButton (acción al soltar)")
+                Text("HU 4 · Piano roll (rejilla fija, fracciones de compás) + controles anteriores")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+
+                AcidPianoRoll(
+                    gridSteps: store.pianoRollGridSteps,
+                    notes: store.pianoRollNotes,
+                    onGridStepsChange: { store.send(.pianoRollGridStepsChanged($0)) },
+                    onStepTap: { row, step in store.send(.pianoRollStepToggled(row: row, step: step)) },
+                    onStepsPainted: { row, a, b in
+                        store.send(.pianoRollStepsPainted(row: row, startStep: a, endStep: b))
+                    },
+                    onNoteRemove: { store.send(.pianoRollNoteRemoved($0)) },
+                    onNoteResize: { id, start, length in
+                        store.send(.pianoRollNoteResized(id: id, startStep: start, length: length))
+                    }
+                )
+                .padding(.horizontal, 8)
 
                 HStack(spacing: 16) {
                     AcidButton(title: "PLAY", systemImage: "play.fill") {
