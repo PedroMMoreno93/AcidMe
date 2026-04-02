@@ -41,29 +41,30 @@ final class LiveAudioKitEngine {
         lowPass = filter
     }
 
-    /// Aplica cutoff (knob 0…1) y selección de onda; ramps cortos para evitar clics.
+    /// Aplica cutoff (knob 0…1) y selección de onda.
+    /// El cutoff del `LowPassFilter` (Audio Unit de Apple) suele **no** admitir `NodeParameter.ramp`;
+    /// si se llama a `ramp`, no actualiza el valor. Asignación directa al `@Parameter` sí.
+    /// `PlaygroundOscillator.amplitude` no es `@Parameter`: solo asignación directa.
     func applyDemoSynthParams(knobNormalized: Double, toggle: AcidToggleSelection) {
         guard let lowPass, let sawOsc, let sqrOsc else { return }
 
-        let hz = SynthParamsMath.lowPassCutoffHz(normalized01: knobNormalized)
-        let d = DemoSynth.rampSeconds
-        lowPass.$cutoffFrequency.ramp(to: hz, duration: d)
+        let hz = AUValue(SynthParamsMath.lowPassCutoffHz(normalized01: knobNormalized))
+        lowPass.cutoffFrequency = hz
 
         let level = DemoSynth.oscLevel
         switch toggle {
         case .upper:
-            sawOsc.$amplitude.ramp(to: level, duration: d)
-            sqrOsc.$amplitude.ramp(to: 0, duration: d)
+            sawOsc.amplitude = level
+            sqrOsc.amplitude = 0
         case .lower:
-            sawOsc.$amplitude.ramp(to: 0, duration: d)
-            sqrOsc.$amplitude.ramp(to: level, duration: d)
+            sawOsc.amplitude = 0
+            sqrOsc.amplitude = level
         }
     }
 }
 
 private enum DemoSynth {
     static let oscLevel: AUValue = 0.03
-    static let rampSeconds: Float = 0.03
 }
 
 // MARK: - Dependencia TCA
