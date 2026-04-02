@@ -11,7 +11,7 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 4 · Piano roll (rejilla fija, fracciones de compás) + controles anteriores")
+                Text("HU 4–5 · Piano roll + AcidKeyboard (Note On + Hz) + controles anteriores")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -30,6 +30,21 @@ struct AppView: View {
                     }
                 )
                 .padding(.horizontal, 8)
+
+                AcidKeyboard(
+                    octaveOffset: store.keyboardOctaveOffset,
+                    pressedMidiNotes: store.keyboardPressedMidiNotes,
+                    onOctaveOffsetChange: { store.send(.keyboardOctaveOffsetChanged($0)) },
+                    onNoteOn: { midi, hz in store.send(.keyboardNoteOn(midiNote: midi, frequencyHz: hz)) },
+                    onNoteOff: { store.send(.keyboardNoteOff(midiNote: $0)) }
+                )
+                .padding(.horizontal, 8)
+
+                if let last = store.keyboardLastNoteOn {
+                    Text("Último Note On: MIDI \(last.midiNote) · \(String(format: "%.2f", last.frequencyHz)) Hz")
+                        .font(.caption2.monospacedDigit())
+                        .foregroundStyle(.tertiary)
+                }
 
                 HStack(spacing: 16) {
                     AcidButton(title: "PLAY", systemImage: "play.fill") {

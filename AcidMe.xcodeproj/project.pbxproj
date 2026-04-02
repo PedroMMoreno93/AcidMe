@@ -19,9 +19,11 @@
 		94C22E137E1F1ABC8FACA7FB /* AcidKnobMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1429EFE4D1429D0BC5C55E16 /* AcidKnobMathTests.swift */; };
 		97B807EE9805154AC7842C7A /* AcidToggleSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0083D446F27199C7C8DCF084 /* AcidToggleSelectionTests.swift */; };
 		9B6E7E9AD60C9F99D2E54C58 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = EC0B52AD9704E1B22B0A1397 /* ComposableArchitecture */; };
+		9F47412D5D333BE53A511FD5 /* AcidKeyboardMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E666C9AB4E64FDCD9675B910 /* AcidKeyboardMathTests.swift */; };
 		C8AD1F78E343A5FD3FDB6E49 /* AcidPianoRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E8C27A722E097E29D34EF8 /* AcidPianoRoll.swift */; };
 		CE304586C2F300256A022A53 /* AcidMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973DB5D629F27409804B1093 /* AcidMeApp.swift */; };
 		E0A9144D29558897D8FD1ED3 /* AcidKnob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */; };
+		E73AA2F81B89757051283D57 /* AcidKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917F0F3E18EC986870855A06 /* AcidKeyboard.swift */; };
 		FDFBC7AC139584F4B17B6589 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0348C6BA11532A7A728F65 /* Perception */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +46,7 @@
 		3D9B647A79ED1E0E065B36D8 /* AcidButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidButton.swift; sourceTree = "<group>"; };
 		72527E242323BE0F165CB92F /* AcidToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidToggle.swift; sourceTree = "<group>"; };
 		85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKnob.swift; sourceTree = "<group>"; };
+		917F0F3E18EC986870855A06 /* AcidKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKeyboard.swift; sourceTree = "<group>"; };
 		973DB5D629F27409804B1093 /* AcidMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidMeApp.swift; sourceTree = "<group>"; };
 		A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
 		C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioKitBootstrap.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 		D12FA876D6E8CEE040984562 /* AcidMeTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AcidMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3B5A66BD50A60974610B2A2 /* AcidMe.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AcidMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2E8C27A722E097E29D34EF8 /* AcidPianoRoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidPianoRoll.swift; sourceTree = "<group>"; };
+		E666C9AB4E64FDCD9675B910 /* AcidKeyboardMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKeyboardMathTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				1C74C92758A1EC6F49F23E30 /* AcidButtonTests.swift */,
+				E666C9AB4E64FDCD9675B910 /* AcidKeyboardMathTests.swift */,
 				1429EFE4D1429D0BC5C55E16 /* AcidKnobMathTests.swift */,
 				0083D446F27199C7C8DCF084 /* AcidToggleSelectionTests.swift */,
 				A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */,
@@ -137,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				3D9B647A79ED1E0E065B36D8 /* AcidButton.swift */,
+				917F0F3E18EC986870855A06 /* AcidKeyboard.swift */,
 				85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */,
 				E2E8C27A722E097E29D34EF8 /* AcidPianoRoll.swift */,
 				72527E242323BE0F165CB92F /* AcidToggle.swift */,
@@ -226,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AEDF4A5F7DDC8BD1B9746AE /* AcidButtonTests.swift in Sources */,
+				9F47412D5D333BE53A511FD5 /* AcidKeyboardMathTests.swift in Sources */,
 				94C22E137E1F1ABC8FACA7FB /* AcidKnobMathTests.swift in Sources */,
 				97B807EE9805154AC7842C7A /* AcidToggleSelectionTests.swift in Sources */,
 				6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */,
@@ -238,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ACAE474A6C3C589DE2F194B /* AcidButton.swift in Sources */,
+				E73AA2F81B89757051283D57 /* AcidKeyboard.swift in Sources */,
 				E0A9144D29558897D8FD1ED3 /* AcidKnob.swift in Sources */,
 				CE304586C2F300256A022A53 /* AcidMeApp.swift in Sources */,
 				C8AD1F78E343A5FD3FDB6E49 /* AcidPianoRoll.swift in Sources */,

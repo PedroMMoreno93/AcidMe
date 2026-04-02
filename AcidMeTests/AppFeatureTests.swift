@@ -92,4 +92,70 @@ struct AppFeatureTests {
             $0.pianoRollNotes = []
         }
     }
+
+    @Test
+    func keyboardNoteOn_actualizaPulsacionYUltimaNota() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        let hz = AcidKeyboardMath.frequencyHz(midiNote: 64)
+        await store.send(.keyboardNoteOn(midiNote: 64, frequencyHz: hz)) {
+            $0.keyboardPressedMidiNotes = [64]
+            $0.keyboardLastNoteOn = (64, hz)
+        }
+    }
+
+    @Test
+    func keyboardNoteOff_quitaPulsacion() async {
+        var state = AppFeature.State()
+        state.keyboardPressedMidiNotes = [60, 64]
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+        await store.send(.keyboardNoteOff(midiNote: 64)) {
+            $0.keyboardPressedMidiNotes = [60]
+        }
+    }
+
+    @Test
+    func keyboardOctaveOffsetChanged_acota() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        await store.send(.keyboardOctaveOffsetChanged(10)) {
+            $0.keyboardOctaveOffset = 3
+        }
+        await store.send(.keyboardOctaveOffsetChanged(-10)) {
+            $0.keyboardOctaveOffset = -3
+        }
+    }
+
+    @Test
+    func keyboardOctaveOffsetChanged_valoresIntermedios() async {
+        let store = TestStore(initialState: AppFeature.State(keyboardOctaveOffset: 0)) {
+            AppFeature()
+        }
+        await store.send(.keyboardOctaveOffsetChanged(2)) {
+            $0.keyboardOctaveOffset = 2
+        }
+        await store.send(.keyboardOctaveOffsetChanged(-1)) {
+            $0.keyboardOctaveOffset = -1
+        }
+    }
+
+    @Test
+    func stateEquality_incluyeTecladoYUltimaNota() {
+        var a = AppFeature.State()
+        var b = AppFeature.State()
+        let hz = AcidKeyboardMath.frequencyHz(midiNote: 60)
+        a.keyboardOctaveOffset = 1
+        a.keyboardPressedMidiNotes = [60]
+        a.keyboardLastNoteOn = (60, hz)
+        b.keyboardOctaveOffset = 1
+        b.keyboardPressedMidiNotes = [60]
+        b.keyboardLastNoteOn = (60, hz)
+        #expect(a == b)
+        b.keyboardLastNoteOn = (61, hz)
+        #expect(a != b)
+    }
 }

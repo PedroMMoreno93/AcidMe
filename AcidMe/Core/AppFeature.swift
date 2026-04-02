@@ -6,6 +6,19 @@ import Foundation
 struct AppFeature {
     @ObservableState
     struct State: Equatable {
+        static func == (lhs: AppFeature.State, rhs: AppFeature.State) -> Bool {
+            return lhs.demoKnobValue == rhs.demoKnobValue
+            && lhs.demoToggleSelection == rhs.demoToggleSelection
+            && lhs.demoPlayButtonReleaseCount == rhs.demoPlayButtonReleaseCount
+            && lhs.demoClearButtonReleaseCount == rhs.demoClearButtonReleaseCount
+            && lhs.pianoRollGridSteps == rhs.pianoRollGridSteps
+            && lhs.pianoRollNotes == rhs.pianoRollNotes
+            && lhs.keyboardOctaveOffset == rhs.keyboardOctaveOffset
+            && lhs.keyboardPressedMidiNotes == rhs.keyboardPressedMidiNotes
+            && lhs.keyboardLastNoteOn?.midiNote == rhs.keyboardLastNoteOn?.midiNote
+            && lhs.keyboardLastNoteOn?.frequencyHz == rhs.keyboardLastNoteOn?.frequencyHz
+        }
+
         /// Valor de demostración del AcidKnob (HU 1); más adelante se sustituirá por parámetros reales de síntesis.
         var demoKnobValue: Double = 0.35
         /// Selección del AcidToggle (HU 2); p. ej. onda superior/inferior o FX.
@@ -16,6 +29,11 @@ struct AppFeature {
         /// Piano roll: hasta 16 pasos (1 compás); 4/8 = fracciones del compás (HU 4).
         var pianoRollGridSteps: Int = 16
         var pianoRollNotes: [PianoRollNote] = []
+        /// Teclado musical (HU 5): octava ±3 respecto a C4; notas actualmente pulsadas.
+        var keyboardOctaveOffset: Int = 0
+        var keyboardPressedMidiNotes: Set<Int> = []
+        /// Último Note On (demo hasta AudioClient en HU 6).
+        var keyboardLastNoteOn: (midiNote: Int, frequencyHz: Double)?
     }
 
     enum Action: BindableAction, Equatable {
@@ -27,6 +45,9 @@ struct AppFeature {
         case pianoRollStepsPainted(row: Int, startStep: Int, endStep: Int)
         case pianoRollNoteRemoved(UUID)
         case pianoRollNoteResized(id: UUID, startStep: Int, length: Int)
+        case keyboardOctaveOffsetChanged(Int)
+        case keyboardNoteOn(midiNote: Int, frequencyHz: Double)
+        case keyboardNoteOff(midiNote: Int)
     }
 
     var body: some ReducerOf<Self> {
@@ -84,6 +105,19 @@ struct AppFeature {
                     newLength: length,
                     stepCount: steps
                 )
+                return .none
+            case let .keyboardOctaveOffsetChanged(raw):
+                state.keyboardOctaveOffset = max(
+                    AcidKeyboardMath.minOctaveOffset,
+                    min(AcidKeyboardMath.maxOctaveOffset, raw)
+                )
+                return .none
+            case let .keyboardNoteOn(midiNote, frequencyHz):
+                state.keyboardPressedMidiNotes.insert(midiNote)
+                state.keyboardLastNoteOn = (midiNote, frequencyHz)
+                return .none
+            case let .keyboardNoteOff(midiNote):
+                state.keyboardPressedMidiNotes.remove(midiNote)
                 return .none
             }
         }

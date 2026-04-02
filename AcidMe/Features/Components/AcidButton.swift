@@ -35,10 +35,13 @@ enum AcidButtonStyleMath {
 
 /// Botón metálico: aspecto “pulsado” mientras el dedo está abajo; la acción de SwiftUI se ejecuta al **soltar** dentro del área (Gherkin HU 3).
 struct AcidMetalButtonStyle: ButtonStyle {
+    var horizontalPadding: CGFloat = 18
+    var verticalPadding: CGFloat = 12
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.horizontal, 18)
-            .padding(.vertical, 12)
+            .padding(.horizontal, horizontalPadding)
+            .padding(.vertical, verticalPadding)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(metalFill(pressed: configuration.isPressed))
