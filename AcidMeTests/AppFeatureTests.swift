@@ -92,4 +92,41 @@ struct AppFeatureTests {
             $0.pianoRollNotes = []
         }
     }
+
+    @Test
+    func keyboardNoteOn_actualizaPulsacionYUltimaNota() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        let hz = AcidKeyboardMath.frequencyHz(midiNote: 64)
+        await store.send(.keyboardNoteOn(midiNote: 64, frequencyHz: hz)) {
+            $0.keyboardPressedMidiNotes = [64]
+            $0.keyboardLastNoteOn = (64, hz)
+        }
+    }
+
+    @Test
+    func keyboardNoteOff_quitaPulsacion() async {
+        var state = AppFeature.State()
+        state.keyboardPressedMidiNotes = [60, 64]
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+        await store.send(.keyboardNoteOff(midiNote: 64)) {
+            $0.keyboardPressedMidiNotes = [60]
+        }
+    }
+
+    @Test
+    func keyboardOctaveOffsetChanged_acota() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        await store.send(.keyboardOctaveOffsetChanged(10)) {
+            $0.keyboardOctaveOffset = 3
+        }
+        await store.send(.keyboardOctaveOffsetChanged(-10)) {
+            $0.keyboardOctaveOffset = -3
+        }
+    }
 }
