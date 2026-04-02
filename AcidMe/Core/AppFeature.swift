@@ -13,12 +13,20 @@ struct AppFeature {
         /// Contadores de suelta en botones demo (HU 3).
         var demoPlayButtonReleaseCount: Int = 0
         var demoClearButtonReleaseCount: Int = 0
+        /// Piano roll: hasta 16 pasos (1 compás); 4/8 = fracciones del compás (HU 4).
+        var pianoRollGridSteps: Int = 16
+        var pianoRollNotes: [PianoRollNote] = []
     }
 
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case demoPlayButtonReleased
         case demoClearButtonReleased
+        case pianoRollGridStepsChanged(Int)
+        case pianoRollStepToggled(row: Int, step: Int)
+        case pianoRollStepsPainted(row: Int, startStep: Int, endStep: Int)
+        case pianoRollNoteRemoved(UUID)
+        case pianoRollNoteResized(id: UUID, startStep: Int, length: Int)
     }
 
     var body: some ReducerOf<Self> {
@@ -35,6 +43,47 @@ struct AppFeature {
             case .demoClearButtonReleased:
                 state.demoClearButtonReleaseCount += 1
                 state.demoKnobValue = 0
+                state.pianoRollNotes = []
+                return .none
+            case let .pianoRollGridStepsChanged(raw):
+                let steps = PianoRollGridMath.normalizedGridSteps(raw)
+                state.pianoRollGridSteps = steps
+                state.pianoRollNotes = PianoRollGridMath.clampedNotes(
+                    state.pianoRollNotes,
+                    stepCount: steps
+                )
+                return .none
+            case let .pianoRollStepToggled(row, step):
+                let steps = PianoRollGridMath.normalizedGridSteps(state.pianoRollGridSteps)
+                state.pianoRollNotes = PianoRollGridMath.togglingStep(
+                    notes: state.pianoRollNotes,
+                    row: row,
+                    step: step,
+                    stepCount: steps
+                )
+                return .none
+            case let .pianoRollStepsPainted(row, startStep, endStep):
+                let steps = PianoRollGridMath.normalizedGridSteps(state.pianoRollGridSteps)
+                state.pianoRollNotes = PianoRollGridMath.paintSteps(
+                    notes: state.pianoRollNotes,
+                    row: row,
+                    fromStep: startStep,
+                    toStep: endStep,
+                    stepCount: steps
+                )
+                return .none
+            case let .pianoRollNoteRemoved(id):
+                state.pianoRollNotes.removeAll { $0.id == id }
+                return .none
+            case let .pianoRollNoteResized(id, startStep, length):
+                let steps = PianoRollGridMath.normalizedGridSteps(state.pianoRollGridSteps)
+                state.pianoRollNotes = PianoRollGridMath.applyNoteSpan(
+                    notes: state.pianoRollNotes,
+                    id: id,
+                    newStart: startStep,
+                    newLength: length,
+                    stepCount: steps
+                )
                 return .none
             }
         }

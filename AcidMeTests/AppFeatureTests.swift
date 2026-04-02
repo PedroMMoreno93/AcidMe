@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Foundation
 import Testing
 
 @testable import AcidMe
@@ -58,6 +59,37 @@ struct AppFeatureTests {
         await store.send(.demoClearButtonReleased) {
             $0.demoClearButtonReleaseCount = 1
             $0.demoKnobValue = 0
+            $0.pianoRollNotes = []
+        }
+    }
+
+    @Test
+    func pianoRollStepToggled_anadeYQuitaNota() async {
+        let store = Store(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        await store.send(.pianoRollStepToggled(row: 3, step: 7))
+        #expect(store.pianoRollNotes.count == 1)
+        #expect(store.pianoRollNotes[0].row == 3)
+        #expect(store.pianoRollNotes[0].startStep == 7)
+        #expect(store.pianoRollNotes[0].lengthSteps == 1)
+        await store.send(.pianoRollStepToggled(row: 3, step: 7))
+        #expect(store.pianoRollNotes.isEmpty)
+    }
+
+    @Test
+    func demoClearButtonReleased_vaciaPianoRoll() async {
+        var state = AppFeature.State()
+        state.pianoRollNotes = [
+            PianoRollNote(id: UUID(), row: 1, startStep: 2, lengthSteps: 1)
+        ]
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+        await store.send(.demoClearButtonReleased) {
+            $0.demoClearButtonReleaseCount = 1
+            $0.demoKnobValue = 0
+            $0.pianoRollNotes = []
         }
     }
 }
