@@ -11,7 +11,7 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 4–5 · Piano roll + AcidKeyboard (Note On + Hz) + controles anteriores")
+                Text("HU 4–6 · Piano roll + teclado + AudioClient (motor AudioKit)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -81,14 +81,25 @@ struct AppView: View {
                         .frame(minWidth: 120, alignment: .leading)
                 }
 
-                if AudioKitBootstrap.isModuleLinked {
-                    Text("AudioKit enlazado")
+                if let err = store.audioEnginePrepareError {
+                    Text("Audio: \(err)")
+                        .font(.caption2)
+                        .foregroundStyle(.red)
+                } else if store.audioEnginePrepared {
+                    Text("Motor de audio listo")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                } else if AudioKitBootstrap.isModuleLinked {
+                    Text("Iniciando motor de audio…")
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(red: 0.95, green: 0.85, blue: 0.15).opacity(0.15))
+            .task {
+                await store.send(.prepareAudioEngine).finish()
+            }
         }
     }
 }

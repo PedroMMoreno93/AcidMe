@@ -25,6 +25,7 @@
 		E0A9144D29558897D8FD1ED3 /* AcidKnob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */; };
 		E73AA2F81B89757051283D57 /* AcidKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917F0F3E18EC986870855A06 /* AcidKeyboard.swift */; };
 		FDFBC7AC139584F4B17B6589 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0348C6BA11532A7A728F65 /* Perception */; };
+		FECE2264436AC76CDD84996B /* AudioClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C86689A5947FEE0B0F2F38 /* AudioClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		0083D446F27199C7C8DCF084 /* AcidToggleSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidToggleSelectionTests.swift; sourceTree = "<group>"; };
+		12C86689A5947FEE0B0F2F38 /* AudioClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClient.swift; sourceTree = "<group>"; };
 		1429EFE4D1429D0BC5C55E16 /* AcidKnobMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKnobMathTests.swift; sourceTree = "<group>"; };
 		1976140D3190C10989DF090E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1C74C92758A1EC6F49F23E30 /* AcidButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidButtonTests.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */,
+				12C86689A5947FEE0B0F2F38 /* AudioClient.swift */,
 				C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */,
 			);
 			path = Core;
@@ -251,6 +254,7 @@
 				C8AD1F78E343A5FD3FDB6E49 /* AcidPianoRoll.swift in Sources */,
 				05B28052F24782E2405EA953 /* AcidToggle.swift in Sources */,
 				8F90CFBED1385137F71B1CE6 /* AppFeature.swift in Sources */,
+				FECE2264436AC76CDD84996B /* AudioClient.swift in Sources */,
 				04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */,
 				882409673B5C11AF4F05E788 /* ContentView.swift in Sources */,
 			);
