@@ -11,7 +11,7 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 4–6 · Piano roll + teclado + AudioClient (motor AudioKit)")
+                Text("HU 4–7 · Piano roll + teclado + motor + parámetros demo (cutoff / onda)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -62,7 +62,7 @@ struct AppView: View {
                     VStack(spacing: 8) {
                         AcidKnob(
                             value: $store.demoKnobValue,
-                            label: "DEMO"
+                            label: "CUTOFF"
                         )
                         Text(String(format: "valor: %.3f", store.demoKnobValue))
                             .font(.caption.monospacedDigit())
