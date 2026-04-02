@@ -17,6 +17,8 @@ struct AppFeature {
             && lhs.keyboardPressedMidiNotes == rhs.keyboardPressedMidiNotes
             && lhs.keyboardLastNoteOn?.midiNote == rhs.keyboardLastNoteOn?.midiNote
             && lhs.keyboardLastNoteOn?.frequencyHz == rhs.keyboardLastNoteOn?.frequencyHz
+            && lhs.audioEnginePrepared == rhs.audioEnginePrepared
+            && lhs.audioEnginePrepareError == rhs.audioEnginePrepareError
         }
 
         /// Valor de demostración del AcidKnob (HU 1); más adelante se sustituirá por parámetros reales de síntesis.
@@ -34,6 +36,9 @@ struct AppFeature {
         var keyboardPressedMidiNotes: Set<Int> = []
         /// Último Note On (demo hasta AudioClient en HU 6).
         var keyboardLastNoteOn: (midiNote: Int, frequencyHz: Double)?
+        /// HU 6: motor AudioKit listo para recibir comandos.
+        var audioEnginePrepared: Bool = false
+        var audioEnginePrepareError: String?
     }
 
     enum Action: BindableAction, Equatable {
@@ -48,6 +53,10 @@ struct AppFeature {
         case keyboardOctaveOffsetChanged(Int)
         case keyboardNoteOn(midiNote: Int, frequencyHz: Double)
         case keyboardNoteOff(midiNote: Int)
+        /// Arranca el motor de audio una vez al iniciar la UI raíz.
+        case prepareAudioEngine
+        case audioEnginePrepared
+        case audioEnginePrepareFailed(String)
     }
 
     var body: some ReducerOf<Self> {
@@ -118,6 +127,24 @@ struct AppFeature {
                 return .none
             case let .keyboardNoteOff(midiNote):
                 state.keyboardPressedMidiNotes.remove(midiNote)
+                return .none
+            case .prepareAudioEngine:
+                return .run { send in
+                    @Dependency(\.audioClient) var audioClient
+                    do {
+                        try await audioClient.prepare()
+                        await send(.audioEnginePrepared)
+                    } catch {
+                        await send(.audioEnginePrepareFailed(error.localizedDescription))
+                    }
+                }
+            case .audioEnginePrepared:
+                state.audioEnginePrepared = true
+                state.audioEnginePrepareError = nil
+                return .none
+            case let .audioEnginePrepareFailed(message):
+                state.audioEnginePrepared = false
+                state.audioEnginePrepareError = message
                 return .none
             }
         }

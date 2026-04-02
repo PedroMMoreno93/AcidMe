@@ -144,6 +144,40 @@ struct AppFeatureTests {
     }
 
     @Test
+    func prepareAudioEngine_invocaClienteYMarcaListo() async {
+        var prepareCalls = 0
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient.prepare = {
+                prepareCalls += 1
+            }
+        }
+        await store.send(.prepareAudioEngine)
+        await store.receive(.audioEnginePrepared) {
+            $0.audioEnginePrepared = true
+            $0.audioEnginePrepareError = nil
+        }
+        #expect(prepareCalls == 1)
+    }
+
+    @Test
+    func prepareAudioEngine_errorActualizaEstado() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient.prepare = {
+                throw NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "fallo simulado"])
+            }
+        }
+        await store.send(.prepareAudioEngine)
+        await store.receive(.audioEnginePrepareFailed("fallo simulado")) {
+            $0.audioEnginePrepared = false
+            $0.audioEnginePrepareError = "fallo simulado"
+        }
+    }
+
+    @Test
     func stateEquality_incluyeTecladoYUltimaNota() {
         var a = AppFeature.State()
         var b = AppFeature.State()
