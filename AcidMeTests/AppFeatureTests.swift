@@ -29,6 +29,34 @@ struct AppFeatureTests {
     }
 
     @Test
+    func binding_propagaParametrosAlAudioClient() async {
+        var lastKnob: Double?
+        var lastToggle: AcidToggleSelection?
+        let store = TestStore(initialState: AppFeature.State(demoKnobValue: 0.2, demoToggleSelection: .upper)) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { k, t in
+                    lastKnob = k
+                    lastToggle = t
+                }
+            )
+        }
+        await store.send(.binding(.set(\.demoKnobValue, 0.7))) {
+            $0.demoKnobValue = 0.7
+        }
+        #expect(lastKnob == 0.7)
+        #expect(lastToggle == .upper)
+
+        await store.send(.binding(.set(\.demoToggleSelection, .lower))) {
+            $0.demoToggleSelection = .lower
+        }
+        #expect(lastKnob == 0.7)
+        #expect(lastToggle == .lower)
+    }
+
+    @Test
     func binding_demoToggleSelection_actualizaEstado() async {
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
@@ -53,14 +81,23 @@ struct AppFeatureTests {
 
     @Test
     func demoClearButtonReleased_incrementaYReseteaKnob() async {
+        var lastKnob: Double?
         let store = TestStore(initialState: AppFeature.State(demoKnobValue: 0.8)) {
             AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { k, _ in
+                    lastKnob = k
+                }
+            )
         }
         await store.send(.demoClearButtonReleased) {
             $0.demoClearButtonReleaseCount = 1
             $0.demoKnobValue = 0
             $0.pianoRollNotes = []
         }
+        #expect(lastKnob == 0)
     }
 
     @Test
@@ -83,14 +120,23 @@ struct AppFeatureTests {
         state.pianoRollNotes = [
             PianoRollNote(id: UUID(), row: 1, startStep: 2, lengthSteps: 1)
         ]
+        var applyCount = 0
         let store = TestStore(initialState: state) {
             AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { _, _ in
+                    applyCount += 1
+                }
+            )
         }
         await store.send(.demoClearButtonReleased) {
             $0.demoClearButtonReleaseCount = 1
             $0.demoKnobValue = 0
             $0.pianoRollNotes = []
         }
+        #expect(applyCount == 1)
     }
 
     @Test
@@ -146,12 +192,16 @@ struct AppFeatureTests {
     @Test
     func prepareAudioEngine_invocaClienteYMarcaListo() async {
         var prepareCalls = 0
+        var applyCalls = 0
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
         } withDependencies: {
-            $0.audioClient.prepare = {
-                prepareCalls += 1
-            }
+            $0.audioClient = AudioClient(
+                prepare: { prepareCalls += 1 },
+                applyDemoSynthParams: { _, _ in
+                    applyCalls += 1
+                }
+            )
         }
         await store.send(.prepareAudioEngine)
         await store.receive(.audioEnginePrepared) {
@@ -159,6 +209,33 @@ struct AppFeatureTests {
             $0.audioEnginePrepareError = nil
         }
         #expect(prepareCalls == 1)
+        #expect(applyCalls == 1)
+    }
+
+    @Test
+    func prepareAudioEngine_sincronizaKnobYToggleTrasEstarListo() async {
+        var lastKnob: Double?
+        var lastToggle: AcidToggleSelection?
+        let store = TestStore(
+            initialState: AppFeature.State(demoKnobValue: 0.42, demoToggleSelection: .lower)
+        ) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { k, t in
+                    lastKnob = k
+                    lastToggle = t
+                }
+            )
+        }
+        await store.send(.prepareAudioEngine)
+        await store.receive(.audioEnginePrepared) {
+            $0.audioEnginePrepared = true
+            $0.audioEnginePrepareError = nil
+        }
+        #expect(lastKnob == 0.42)
+        #expect(lastToggle == .lower)
     }
 
     @Test
@@ -166,15 +243,29 @@ struct AppFeatureTests {
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
         } withDependencies: {
-            $0.audioClient.prepare = {
-                throw NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "fallo simulado"])
-            }
+            $0.audioClient = AudioClient(
+                prepare: {
+                    throw NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "fallo simulado"])
+                },
+                applyDemoSynthParams: { _, _ in }
+            )
         }
         await store.send(.prepareAudioEngine)
         await store.receive(.audioEnginePrepareFailed("fallo simulado")) {
             $0.audioEnginePrepared = false
             $0.audioEnginePrepareError = "fallo simulado"
         }
+    }
+
+    @Test
+    func stateEquality_incluyeFlagsDelMotorDeAudio() {
+        var a = AppFeature.State()
+        var b = AppFeature.State()
+        a.audioEnginePrepared = true
+        b.audioEnginePrepared = true
+        #expect(a == b)
+        b.audioEnginePrepareError = "x"
+        #expect(a != b)
     }
 
     @Test

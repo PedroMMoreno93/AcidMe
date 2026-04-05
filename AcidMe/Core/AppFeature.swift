@@ -66,7 +66,12 @@ struct AppFeature {
             case .binding:
                 // Tras cualquier binding, mantiene el knob en 0…1 (p. ej. arrastre del AcidKnob).
                 state.demoKnobValue = min(1, max(0, state.demoKnobValue))
-                return .none
+                let k = state.demoKnobValue
+                let t = state.demoToggleSelection
+                return .run { _ in
+                    @Dependency(\.audioClient) var audioClient
+                    await audioClient.applyDemoSynthParams(k, t)
+                }
             case .demoPlayButtonReleased:
                 state.demoPlayButtonReleaseCount += 1
                 return .none
@@ -74,7 +79,12 @@ struct AppFeature {
                 state.demoClearButtonReleaseCount += 1
                 state.demoKnobValue = 0
                 state.pianoRollNotes = []
-                return .none
+                let k = state.demoKnobValue
+                let t = state.demoToggleSelection
+                return .run { _ in
+                    @Dependency(\.audioClient) var audioClient
+                    await audioClient.applyDemoSynthParams(k, t)
+                }
             case let .pianoRollGridStepsChanged(raw):
                 let steps = PianoRollGridMath.normalizedGridSteps(raw)
                 state.pianoRollGridSteps = steps
@@ -141,7 +151,12 @@ struct AppFeature {
             case .audioEnginePrepared:
                 state.audioEnginePrepared = true
                 state.audioEnginePrepareError = nil
-                return .none
+                let k = state.demoKnobValue
+                let t = state.demoToggleSelection
+                return .run { _ in
+                    @Dependency(\.audioClient) var audioClient
+                    await audioClient.applyDemoSynthParams(k, t)
+                }
             case let .audioEnginePrepareFailed(message):
                 state.audioEnginePrepared = false
                 state.audioEnginePrepareError = message

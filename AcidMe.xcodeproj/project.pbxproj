@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */; };
 		05B28052F24782E2405EA953 /* AcidToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72527E242323BE0F165CB92F /* AcidToggle.swift */; };
+		06CD690D4CC336BA97CE38B6 /* SynthParamsMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDD18095DCE4EDB7A198883 /* SynthParamsMathTests.swift */; };
 		2AEDF4A5F7DDC8BD1B9746AE /* AcidButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C74C92758A1EC6F49F23E30 /* AcidButtonTests.swift */; };
 		505D4E417396FFF108119186 /* PianoRollGridMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B7A640174A43915414678 /* PianoRollGridMathTests.swift */; };
 		6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */; };
@@ -22,6 +23,7 @@
 		9F47412D5D333BE53A511FD5 /* AcidKeyboardMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E666C9AB4E64FDCD9675B910 /* AcidKeyboardMathTests.swift */; };
 		C8AD1F78E343A5FD3FDB6E49 /* AcidPianoRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E8C27A722E097E29D34EF8 /* AcidPianoRoll.swift */; };
 		CE304586C2F300256A022A53 /* AcidMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973DB5D629F27409804B1093 /* AcidMeApp.swift */; };
+		D8FEEF9F312E51F14D518A01 /* SynthParamsMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FEE44C7EDF48761ADDCF20 /* SynthParamsMath.swift */; };
 		E0A9144D29558897D8FD1ED3 /* AcidKnob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */; };
 		E73AA2F81B89757051283D57 /* AcidKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917F0F3E18EC986870855A06 /* AcidKeyboard.swift */; };
 		FDFBC7AC139584F4B17B6589 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 2D0348C6BA11532A7A728F65 /* Perception */; };
@@ -47,6 +49,7 @@
 		1F4B7A640174A43915414678 /* PianoRollGridMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoRollGridMathTests.swift; sourceTree = "<group>"; };
 		3D9B647A79ED1E0E065B36D8 /* AcidButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidButton.swift; sourceTree = "<group>"; };
 		72527E242323BE0F165CB92F /* AcidToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidToggle.swift; sourceTree = "<group>"; };
+		72FEE44C7EDF48761ADDCF20 /* SynthParamsMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynthParamsMath.swift; sourceTree = "<group>"; };
 		85B9A2C6CFF54E9A2CB8F598 /* AcidKnob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKnob.swift; sourceTree = "<group>"; };
 		917F0F3E18EC986870855A06 /* AcidKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKeyboard.swift; sourceTree = "<group>"; };
 		973DB5D629F27409804B1093 /* AcidMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidMeApp.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		D12FA876D6E8CEE040984562 /* AcidMeTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AcidMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3B5A66BD50A60974610B2A2 /* AcidMe.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AcidMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBDD18095DCE4EDB7A198883 /* SynthParamsMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynthParamsMathTests.swift; sourceTree = "<group>"; };
 		E2E8C27A722E097E29D34EF8 /* AcidPianoRoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidPianoRoll.swift; sourceTree = "<group>"; };
 		E666C9AB4E64FDCD9675B910 /* AcidKeyboardMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidKeyboardMathTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +94,7 @@
 				0083D446F27199C7C8DCF084 /* AcidToggleSelectionTests.swift */,
 				A66D02A9BB902AC25D048B2B /* AppFeatureTests.swift */,
 				1F4B7A640174A43915414678 /* PianoRollGridMathTests.swift */,
+				DBDD18095DCE4EDB7A198883 /* SynthParamsMathTests.swift */,
 			);
 			path = AcidMeTests;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 				CF5D7BCC1FB8CA11F0B341A2 /* AppFeature.swift */,
 				12C86689A5947FEE0B0F2F38 /* AudioClient.swift */,
 				C9A3B10ADF925E36015EA4FB /* AudioKitBootstrap.swift */,
+				72FEE44C7EDF48761ADDCF20 /* SynthParamsMath.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -240,6 +246,7 @@
 				97B807EE9805154AC7842C7A /* AcidToggleSelectionTests.swift in Sources */,
 				6438068100CAD48800BA1FF4 /* AppFeatureTests.swift in Sources */,
 				505D4E417396FFF108119186 /* PianoRollGridMathTests.swift in Sources */,
+				06CD690D4CC336BA97CE38B6 /* SynthParamsMathTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +264,7 @@
 				FECE2264436AC76CDD84996B /* AudioClient.swift in Sources */,
 				04A12C56C87872B89D7B68EC /* AudioKitBootstrap.swift in Sources */,
 				882409673B5C11AF4F05E788 /* ContentView.swift in Sources */,
+				D8FEEF9F312E51F14D518A01 /* SynthParamsMath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
