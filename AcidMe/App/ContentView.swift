@@ -11,7 +11,7 @@ struct AppView: View {
             VStack(spacing: 24) {
                 Text("AcidMe!")
                     .font(.largeTitle.bold())
-                Text("HU 4–7 · Piano roll + teclado + motor + parámetros demo (cutoff / onda)")
+                Text("HU 4–8 · Roll + secuenciador + teclado + motor + cutoff / onda")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -19,6 +19,7 @@ struct AppView: View {
                 AcidPianoRoll(
                     gridSteps: store.pianoRollGridSteps,
                     notes: store.pianoRollNotes,
+                    playheadStep: store.sequencerIsRunning ? store.sequencerPlayheadStep : nil,
                     onGridStepsChange: { store.send(.pianoRollGridStepsChanged($0)) },
                     onStepTap: { row, step in store.send(.pianoRollStepToggled(row: row, step: step)) },
                     onStepsPainted: { row, a, b in
@@ -50,12 +51,18 @@ struct AppView: View {
                     AcidButton(title: "PLAY", systemImage: "play.fill") {
                         store.send(.demoPlayButtonReleased)
                     }
+                    AcidButton(title: "STOP", systemImage: "stop.fill") {
+                        store.send(.sequencerStopTapped)
+                    }
                     AcidButton(title: "CLEAR", systemImage: "trash") {
                         store.send(.demoClearButtonReleased)
                     }
-                    Text("PLAY \(store.demoPlayButtonReleaseCount) · CLEAR \(store.demoClearButtonReleaseCount)")
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(.secondary)
+                    Text(
+                        "PLAY \(store.demoPlayButtonReleaseCount) · CLEAR \(store.demoClearButtonReleaseCount)"
+                            + (store.sequencerIsRunning ? " · \(Int(store.sequencerBPM)) BPM" : "")
+                    )
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.secondary)
                 }
 
                 HStack(alignment: .center, spacing: 48) {

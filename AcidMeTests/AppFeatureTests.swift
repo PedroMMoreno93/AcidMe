@@ -40,7 +40,8 @@ struct AppFeatureTests {
                 applyDemoSynthParams: { k, t in
                     lastKnob = k
                     lastToggle = t
-                }
+                },
+                triggerSequencerNote: { _, _ in }
             )
         }
         await store.send(.binding(.set(\.demoKnobValue, 0.7))) {
@@ -70,13 +71,42 @@ struct AppFeatureTests {
     }
 
     @Test
-    func demoPlayButtonReleased_incrementaContador() async {
+    func demoPlayButtonReleased_iniciaTransporteYContador() async {
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { _, _ in },
+                triggerSequencerNote: { _, _ in }
+            )
         }
         await store.send(.demoPlayButtonReleased) {
             $0.demoPlayButtonReleaseCount = 1
+            $0.sequencerIsRunning = true
+            $0.sequencerCurrentStep = 0
+            $0.sequencerPlayheadStep = nil
         }
+        await store.send(.sequencerStopTapped) {
+            $0.sequencerIsRunning = false
+            $0.sequencerPlayheadStep = nil
+        }
+    }
+
+    @Test
+    func demoPlayButtonReleased_ignoraSiYaCorre() async {
+        var state = AppFeature.State()
+        state.sequencerIsRunning = true
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { _, _ in },
+                triggerSequencerNote: { _, _ in }
+            )
+        }
+        await store.send(.demoPlayButtonReleased)
     }
 
     @Test
@@ -89,13 +119,17 @@ struct AppFeatureTests {
                 prepare: {},
                 applyDemoSynthParams: { k, _ in
                     lastKnob = k
-                }
+                },
+                triggerSequencerNote: { _, _ in }
             )
         }
         await store.send(.demoClearButtonReleased) {
             $0.demoClearButtonReleaseCount = 1
             $0.demoKnobValue = 0
             $0.pianoRollNotes = []
+            $0.sequencerIsRunning = false
+            $0.sequencerCurrentStep = 0
+            $0.sequencerPlayheadStep = nil
         }
         #expect(lastKnob == 0)
     }
@@ -128,13 +162,17 @@ struct AppFeatureTests {
                 prepare: {},
                 applyDemoSynthParams: { _, _ in
                     applyCount += 1
-                }
+                },
+                triggerSequencerNote: { _, _ in }
             )
         }
         await store.send(.demoClearButtonReleased) {
             $0.demoClearButtonReleaseCount = 1
             $0.demoKnobValue = 0
             $0.pianoRollNotes = []
+            $0.sequencerIsRunning = false
+            $0.sequencerCurrentStep = 0
+            $0.sequencerPlayheadStep = nil
         }
         #expect(applyCount == 1)
     }
@@ -200,7 +238,8 @@ struct AppFeatureTests {
                 prepare: { prepareCalls += 1 },
                 applyDemoSynthParams: { _, _ in
                     applyCalls += 1
-                }
+                },
+                triggerSequencerNote: { _, _ in }
             )
         }
         await store.send(.prepareAudioEngine)
@@ -226,7 +265,8 @@ struct AppFeatureTests {
                 applyDemoSynthParams: { k, t in
                     lastKnob = k
                     lastToggle = t
-                }
+                },
+                triggerSequencerNote: { _, _ in }
             )
         }
         await store.send(.prepareAudioEngine)
@@ -247,13 +287,94 @@ struct AppFeatureTests {
                 prepare: {
                     throw NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "fallo simulado"])
                 },
-                applyDemoSynthParams: { _, _ in }
+                applyDemoSynthParams: { _, _ in },
+                triggerSequencerNote: { _, _ in }
             )
         }
         await store.send(.prepareAudioEngine)
         await store.receive(.audioEnginePrepareFailed("fallo simulado")) {
             $0.audioEnginePrepared = false
             $0.audioEnginePrepareError = "fallo simulado"
+        }
+    }
+
+    @Test
+    func sequencerTick_avanzaPasoYPlayhead() async {
+        let store = TestStore(
+            initialState: AppFeature.State(
+                sequencerIsRunning: true,
+                sequencerCurrentStep: 0,
+                pianoRollGridSteps: 16,
+                pianoRollNotes: []
+            )
+        ) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { _, _ in },
+                triggerSequencerNote: { _, _ in }
+            )
+        }
+        await store.send(.sequencerTick) {
+            $0.sequencerPlayheadStep = 0
+            $0.sequencerCurrentStep = 1
+        }
+    }
+
+    @Test
+    func sequencerTick_disparaNotaInicioEnPaso() async {
+        let id = UUID()
+        var triggered: [(Int, Double)] = []
+        let store = TestStore(
+            initialState: AppFeature.State(
+                sequencerIsRunning: true,
+                sequencerCurrentStep: 2,
+                pianoRollGridSteps: 16,
+                pianoRollNotes: [
+                    PianoRollNote(id: id, row: 11, startStep: 2, lengthSteps: 2)
+                ],
+                keyboardOctaveOffset: 0
+            )
+        ) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { _, _ in },
+                triggerSequencerNote: { m, h in
+                    triggered.append((m, h))
+                }
+            )
+        }
+        let expectedMidi = PianoRollSequencerMath.midiForRow(11, keyboardOctaveOffset: 0)
+        let expectedHz = AcidKeyboardMath.frequencyHz(midiNote: expectedMidi)
+        await store.send(.sequencerTick) {
+            $0.sequencerPlayheadStep = 2
+            $0.sequencerCurrentStep = 3
+        }
+        #expect(triggered.count == 1)
+        #expect(triggered[0].0 == expectedMidi)
+        #expect(abs(triggered[0].1 - expectedHz) < 1e-9)
+    }
+
+    @Test
+    func sequencerStopTapped_detieneTransporte() async {
+        var state = AppFeature.State()
+        state.sequencerIsRunning = true
+        state.sequencerPlayheadStep = 5
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        } withDependencies: {
+            $0.audioClient = AudioClient(
+                prepare: {},
+                applyDemoSynthParams: { _, _ in },
+                triggerSequencerNote: { _, _ in }
+            )
+        }
+        await store.send(.sequencerStopTapped) {
+            $0.sequencerIsRunning = false
+            $0.sequencerPlayheadStep = nil
         }
     }
 
@@ -265,6 +386,21 @@ struct AppFeatureTests {
         b.audioEnginePrepared = true
         #expect(a == b)
         b.audioEnginePrepareError = "x"
+        #expect(a != b)
+    }
+
+    @Test
+    func stateEquality_incluyeSequencer() {
+        var a = AppFeature.State()
+        var b = AppFeature.State()
+        a.sequencerIsRunning = true
+        a.sequencerCurrentStep = 3
+        a.sequencerPlayheadStep = 2
+        b.sequencerIsRunning = true
+        b.sequencerCurrentStep = 3
+        b.sequencerPlayheadStep = 2
+        #expect(a == b)
+        b.sequencerBPM = 140
         #expect(a != b)
     }
 

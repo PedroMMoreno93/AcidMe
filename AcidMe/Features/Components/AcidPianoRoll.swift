@@ -378,6 +378,8 @@ private struct ActiveNoteResize: Equatable {
 struct AcidPianoRoll: View {
     var gridSteps: Int
     var notes: [PianoRollNote]
+    /// Columna del secuenciador resaltada; `nil` si está parado.
+    var playheadStep: Int?
     var onGridStepsChange: (Int) -> Void
     var onStepTap: (Int, Int) -> Void
     var onStepsPainted: (Int, Int, Int) -> Void
@@ -447,34 +449,49 @@ struct AcidPianoRoll: View {
                         (innerW - CGFloat(stepCount - 1) * spacing) / CGFloat(stepCount)
                     )
                     let stride = cellWidth + spacing
+                    let rows = CGFloat(PianoRollGridMath.rowCount)
+                    let playheadH = rows * rowHeight + (rows - 1) * spacing
 
-                    VStack(alignment: .leading, spacing: spacing) {
-                        HStack(spacing: spacing) {
-                            ForEach(0 ..< stepCount, id: \.self) { s in
-                                Text("\(s + 1)")
-                                    .font(.system(size: 9, weight: .bold, design: .rounded))
-                                    .foregroundStyle(Color(white: 0.94))
-                                    .shadow(color: .black.opacity(0.45), radius: 0, x: 0, y: 0.5)
-                                    .frame(width: cellWidth, height: stepHeaderHeight)
+                    ZStack(alignment: .topLeading) {
+                        VStack(alignment: .leading, spacing: spacing) {
+                            HStack(spacing: spacing) {
+                                ForEach(0 ..< stepCount, id: \.self) { s in
+                                    Text("\(s + 1)")
+                                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                                        .foregroundStyle(Color(white: 0.94))
+                                        .shadow(color: .black.opacity(0.45), radius: 0, x: 0, y: 0.5)
+                                        .frame(width: cellWidth, height: stepHeaderHeight)
+                                }
+                            }
+
+                            VStack(spacing: spacing) {
+                                ForEach(0 ..< PianoRollGridMath.rowCount, id: \.self) { row in
+                                    rowView(
+                                        row: row,
+                                        cellWidth: cellWidth,
+                                        stride: stride
+                                    )
+                                }
                             }
                         }
+                        .padding(.init(
+                            top: gridPaddingTop,
+                            leading: gridPaddingLeading,
+                            bottom: gridPaddingBottom,
+                            trailing: gridPaddingTrailing
+                        ))
 
-                        VStack(spacing: spacing) {
-                            ForEach(0 ..< PianoRollGridMath.rowCount, id: \.self) { row in
-                                rowView(
-                                    row: row,
-                                    cellWidth: cellWidth,
-                                    stride: stride
+                        if let ph = playheadStep, ph >= 0, ph < stepCount {
+                            RoundedRectangle(cornerRadius: 3, style: .continuous)
+                                .fill(Color(red: 0.98, green: 0.88, blue: 0.12).opacity(0.42))
+                                .frame(width: cellWidth, height: playheadH)
+                                .offset(
+                                    x: gridPaddingLeading + CGFloat(ph) * stride,
+                                    y: gridPaddingTop + stepHeaderHeight + spacing
                                 )
-                            }
+                                .allowsHitTesting(false)
                         }
                     }
-                    .padding(.init(
-                        top: gridPaddingTop,
-                        leading: gridPaddingLeading,
-                        bottom: gridPaddingBottom,
-                        trailing: gridPaddingTrailing
-                    ))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     .background(
                         RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -683,6 +700,7 @@ struct AcidPianoRoll: View {
             AcidPianoRoll(
                 gridSteps: gridSteps,
                 notes: notes,
+                playheadStep: nil,
                 onGridStepsChange: { gridSteps = $0 },
                 onStepTap: { r, s in
                     notes = PianoRollGridMath.togglingStep(
