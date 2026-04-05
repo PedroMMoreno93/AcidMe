@@ -4,6 +4,9 @@ import Foundation
 /// Raíz TCA de la app. Se ampliará en HUs posteriores (audio, secuenciador, UI).
 @Reducer
 struct AppFeature {
+    enum CancelID: Hashable {
+        case sequencerLoop
+    }
     @ObservableState
     struct State: Equatable {
         static func == (lhs: AppFeature.State, rhs: AppFeature.State) -> Bool {
@@ -19,6 +22,10 @@ struct AppFeature {
             && lhs.keyboardLastNoteOn?.frequencyHz == rhs.keyboardLastNoteOn?.frequencyHz
             && lhs.audioEnginePrepared == rhs.audioEnginePrepared
             && lhs.audioEnginePrepareError == rhs.audioEnginePrepareError
+            && lhs.sequencerIsRunning == rhs.sequencerIsRunning
+            && lhs.sequencerCurrentStep == rhs.sequencerCurrentStep
+            && lhs.sequencerPlayheadStep == rhs.sequencerPlayheadStep
+            && lhs.sequencerBPM == rhs.sequencerBPM
         }
 
         /// Valor de demostración del AcidKnob (HU 1); más adelante se sustituirá por parámetros reales de síntesis.
@@ -39,6 +46,14 @@ struct AppFeature {
         /// HU 6: motor AudioKit listo para recibir comandos.
         var audioEnginePrepared: Bool = false
         var audioEnginePrepareError: String?
+        /// HU 8: transporte y puntero del secuenciador (pasos del piano roll).
+        var sequencerIsRunning: Bool = false
+        /// Paso que se articula en el próximo `sequencerTick`.
+        var sequencerCurrentStep: Int = 0
+        /// Columna resaltada (último paso articulado); `nil` si el transporte está parado.
+        var sequencerPlayheadStep: Int?
+        /// Pulsos por minuto (40…220) para el reloj del secuenciador.
+        var sequencerBPM: Double = 120
     }
 
     enum Action: BindableAction, Equatable {
@@ -57,6 +72,9 @@ struct AppFeature {
         case prepareAudioEngine
         case audioEnginePrepared
         case audioEnginePrepareFailed(String)
+        /// Avanza un paso, dispara notas con ataque en ese paso y actualiza el playhead.
+        case sequencerTick
+        case sequencerStopTapped
     }
 
     var body: some ReducerOf<Self> {
@@ -73,24 +91,52 @@ struct AppFeature {
                     await audioClient.applyDemoSynthParams(k, t)
                 }
             case .demoPlayButtonReleased:
+                guard !state.sequencerIsRunning else { return .none }
                 state.demoPlayButtonReleaseCount += 1
-                return .none
+                state.sequencerIsRunning = true
+                state.sequencerCurrentStep = 0
+                state.sequencerPlayheadStep = nil
+                let steps = PianoRollGridMath.normalizedGridSteps(state.pianoRollGridSteps)
+                let bpm = state.sequencerBPM
+                return .run { send in
+                    while !Task.isCancelled {
+                        let sec = PianoRollSequencerMath.secondsPerStep(bpm: bpm, stepCount: steps)
+                        let ns = min(sec * 1_000_000_000, Double(UInt64.max))
+                        do {
+                            try await Task.sleep(nanoseconds: UInt64(ns))
+                        } catch {
+                            return
+                        }
+                        await send(.sequencerTick)
+                    }
+                }
+                .cancellable(id: CancelID.sequencerLoop, cancelInFlight: true)
             case .demoClearButtonReleased:
                 state.demoClearButtonReleaseCount += 1
                 state.demoKnobValue = 0
                 state.pianoRollNotes = []
+                state.sequencerIsRunning = false
+                state.sequencerCurrentStep = 0
+                state.sequencerPlayheadStep = nil
                 let k = state.demoKnobValue
                 let t = state.demoToggleSelection
-                return .run { _ in
-                    @Dependency(\.audioClient) var audioClient
-                    await audioClient.applyDemoSynthParams(k, t)
-                }
+                return .merge(
+                    .cancel(id: CancelID.sequencerLoop),
+                    .run { _ in
+                        @Dependency(\.audioClient) var audioClient
+                        await audioClient.applyDemoSynthParams(k, t)
+                    }
+                )
             case let .pianoRollGridStepsChanged(raw):
                 let steps = PianoRollGridMath.normalizedGridSteps(raw)
                 state.pianoRollGridSteps = steps
                 state.pianoRollNotes = PianoRollGridMath.clampedNotes(
                     state.pianoRollNotes,
                     stepCount: steps
+                )
+                state.sequencerCurrentStep = min(
+                    max(0, state.sequencerCurrentStep),
+                    max(0, steps - 1)
                 )
                 return .none
             case let .pianoRollStepToggled(row, step):
@@ -161,6 +207,28 @@ struct AppFeature {
                 state.audioEnginePrepared = false
                 state.audioEnginePrepareError = message
                 return .none
+            case .sequencerTick:
+                guard state.sequencerIsRunning else { return .none }
+                let steps = PianoRollGridMath.normalizedGridSteps(state.pianoRollGridSteps)
+                guard steps > 0 else { return .none }
+                let step = state.sequencerCurrentStep
+                let toPlay = PianoRollSequencerMath.notesStarting(atStep: step, in: state.pianoRollNotes)
+                let octave = state.keyboardOctaveOffset
+                state.sequencerPlayheadStep = step
+                state.sequencerCurrentStep = (step + 1) % steps
+                if toPlay.isEmpty { return .none }
+                return .run { _ in
+                    @Dependency(\.audioClient) var audioClient
+                    for n in toPlay {
+                        let midi = PianoRollSequencerMath.midiForRow(n.row, keyboardOctaveOffset: octave)
+                        let hz = AcidKeyboardMath.frequencyHz(midiNote: midi)
+                        await audioClient.triggerSequencerNote(midi, hz)
+                    }
+                }
+            case .sequencerStopTapped:
+                state.sequencerIsRunning = false
+                state.sequencerPlayheadStep = nil
+                return .cancel(id: CancelID.sequencerLoop)
             }
         }
     }

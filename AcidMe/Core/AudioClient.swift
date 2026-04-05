@@ -61,6 +61,14 @@ final class LiveAudioKitEngine {
             sqrOsc.amplitude = level
         }
     }
+
+    /// Ajusta la frecuencia de ambos osciladores al paso del secuenciador (suena el que tenga amplitud > 0).
+    func triggerSequencerNote(midiNote _: Int, frequencyHz: Double) {
+        guard let sawOsc, let sqrOsc else { return }
+        let f = Float(frequencyHz)
+        sawOsc.frequency = f
+        sqrOsc.frequency = f
+    }
 }
 
 private enum DemoSynth {
@@ -72,6 +80,7 @@ private enum DemoSynth {
 struct AudioClient: Sendable {
     var prepare: @Sendable () async throws -> Void
     var applyDemoSynthParams: @Sendable (Double, AcidToggleSelection) async -> Void
+    var triggerSequencerNote: @Sendable (Int, Double) async -> Void
 }
 
 extension AudioClient: DependencyKey {
@@ -81,12 +90,16 @@ extension AudioClient: DependencyKey {
         },
         applyDemoSynthParams: { knob, toggle in
             await LiveAudioKitEngine.shared.applyDemoSynthParams(knobNormalized: knob, toggle: toggle)
+        },
+        triggerSequencerNote: { midi, hz in
+            await LiveAudioKitEngine.shared.triggerSequencerNote(midiNote: midi, frequencyHz: hz)
         }
     )
 
     static let testValue = AudioClient(
         prepare: {},
-        applyDemoSynthParams: { _, _ in }
+        applyDemoSynthParams: { _, _ in },
+        triggerSequencerNote: { _, _ in }
     )
 }
 
